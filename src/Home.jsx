@@ -1,44 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
 import { LiaHomeSolid } from "react-icons/lia";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoColorFillOutline } from "react-icons/io5";
-import './index.css'
+import "./index.css";
 import TextField from "@mui/material/TextField";
+import KasetsartMap from "./components/KasetsartMap";
 
 function Home() {
-
   return (
-      <div className='flex flex-col w-screen'>
-        <div className='mt-5 mb-2 flex justify-center items-center'>
-            <h2 className='font-bold'>Talai NEXT</h2>
+    <div className="flex flex-col w-screen">
+      <div className="mt-5 mb-2 flex justify-center items-center">
+        <h2 className="font-bold">Talai NEXT</h2>
+      </div>
+      <div className="my-2 mx-[5px] flex justify-between">
+        <div className="flex flex-col w-[30%] justify-center items-center">
+          <LiaHomeSolid size={36} />
+          <h4>Home</h4>
         </div>
-        <div className='my-2 mx-[5px] flex justify-between'>
-            <div className='flex flex-col w-[30%] justify-center items-center'>
-                <LiaHomeSolid size={36}/>
-                <h4>Home</h4>
-            </div>
-            <div className='flex flex-col w-[30%] justify-center items-center'>
-                <TbReportAnalytics size={36}/>
-                <h4>Report</h4>
-            </div>
-            <div className=' flex flex-col w-[30%] justify-center items-center'>
-                <IoColorFillOutline size={36}/>
-                <h4>Theme</h4>
-            </div>
-            
+        <div className="flex flex-col w-[30%] justify-center items-center">
+          <TbReportAnalytics size={36} />
+          <h4>Report</h4>
         </div>
-        <div className='my-2 mx-5'>
-            <TextField
-                id="outlined-basic"
-                variant="outlined"
-                fullWidth
-                label="Search"
-                />
+        <div className=" flex flex-col w-[30%] justify-center items-center">
+          <IoColorFillOutline size={36} />
+          <h4>Theme</h4>
         </div>
       </div>
-  )
+      <div className="my-2 mx-5">
+        <TextField
+          id="outlined-basic"
+          variant="outlined"
+          fullWidth
+          label="Search"
+        />
+
+        <KasetsartMap />
+      </div>
+    </div>
+  );
 }
 
-export default Home
+export default Home;
