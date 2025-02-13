@@ -19,9 +19,8 @@ function Home() {
 
   const fetchData = async () => {
     try{
-      const response1 = await api.get("/line-one/")
-      const responseSpecial = await api.get("/line-special/")
-      console.log("response", response1.data);
+      const response1 = await api.get("/api/line-one/")
+      const responseSpecial = await api.get("/api/line-special/")
       setLine1(response1.data || [] );
       setLineSpecail(responseSpecial.data || [])
     } catch (error) {
