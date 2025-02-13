@@ -1,7 +1,7 @@
 import { Box, Card, CardActions, CardContent} from '@mui/material';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { useState } from 'react';
-function LineCardInfo({line, time, lineInfo}){
+function LineCardInfo({data}){
     const [isOpen, setIsOpen] = useState(false);
     const stops = [
         { id: "w2", name: "ร้านค้าโครงการหลวง", time: 34 },
@@ -34,8 +34,8 @@ function LineCardInfo({line, time, lineInfo}){
                             </div>
                         </div>
                     </CardContent>
-                <div className={` mt-2 px-5 transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? "max-h-[500px]" : "max-h-0"}`}>
-                {stops.map((stop, index) => (
+                <div className={` mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-screen" : "max-h-0"}`}>
+                {data.map((stop, index) => (
                     <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex h-36 items-center">
                         {/* Timeline Column */}
                         <div className="flex flex-col flex-1 items-center w-[50px] h-full">
@@ -50,10 +50,10 @@ function LineCardInfo({line, time, lineInfo}){
                         {/* Stop Details */}
                         <div className="flex px-5 h-full w-full justify-between items-center font-semibold">
                             <div>
-                                <h2>[{stop.id}] {stop.name}</h2>
+                                <h2>[{stop.station.station_code}] {stop.station.name}</h2>
                             </div>
                             <div>
-                                <h2 className="text-[#19854B]">~{stop.time} นาที</h2>
+                                <h2 className="text-[#19854B]">~3 นาที</h2>
                             </div>
                         </div>
                     </CardContent>
