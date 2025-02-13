@@ -1,13 +1,8 @@
 import { Box, Card, CardActions, CardContent} from '@mui/material';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { useState } from 'react';
-function LineCardInfo({data}){
+function LineCardInfo({data, line}){
     const [isOpen, setIsOpen] = useState(false);
-    const stops = [
-        { id: "w2", name: "ร้านค้าโครงการหลวง", time: 34 },
-        { id: "w3", name: "หอพักหญิง", time: 25 },
-        { id: "c9", name: "โรงอาหาร 1", time: 15 },
-    ];
     const handleClick = () => {
         // Toggle visibility of the next CardContent
         console.log(`opem card`);
@@ -23,7 +18,7 @@ function LineCardInfo({data}){
                     >
                         <div className='flex py-3 px-5 justify-between items-center'>
                             <div>
-                                <h2 className='font-semibold'>สาย 1</h2>
+                                <h2 className='font-semibold'>สาย {line}</h2>
                                 <p className='mt-2'>12 นาทีถึงที่ที่คุณอยู่</p>
                             </div>
                             <div>

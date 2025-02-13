@@ -36,7 +36,6 @@ const KasetsartMap = () => {
   const getBusStopLocation = async () => {
     try {
       const response = await api.get("/api/bus-stop-location/");
-      console.log("response", response.data);
       setLocations(response.data);
     } catch (error) {
       alert("Failed to fetch bus stop locations");
