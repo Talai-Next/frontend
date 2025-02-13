@@ -1,3 +1,6 @@
+import './index.css'
+import LineCardInfo from './components/LineCardInfo';
+import Header from './components/Header';
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -10,33 +13,13 @@ import KasetsartMap from "./components/KasetsartMap";
 
 function Home() {
   return (
-    <div className="flex flex-col w-screen">
-      <div className="mt-5 mb-2 flex justify-center items-center">
-        <h2 className="font-bold">Talai NEXT</h2>
-      </div>
-      <div className="my-2 mx-[5px] flex justify-between">
-        <div className="flex flex-col w-[30%] justify-center items-center">
-          <LiaHomeSolid size={36} />
-          <h4>Home</h4>
+      <div className='flex flex-col w-screen'>
+        <Header />
+        <div className='h-[500px] bg-green-200'>
+            <KasetsartMap />
         </div>
-        <div className="flex flex-col w-[30%] justify-center items-center">
-          <TbReportAnalytics size={36} />
-          <h4>Report</h4>
-        </div>
-        <div className=" flex flex-col w-[30%] justify-center items-center">
-          <IoColorFillOutline size={36} />
-          <h4>Theme</h4>
-        </div>
-      </div>
-      <div className="my-2 mx-5">
-        <TextField
-          id="outlined-basic"
-          variant="outlined"
-          fullWidth
-          label="Search"
-        />
-
-        <KasetsartMap />
+        <div className='px-5 py-2'>
+            <LineCardInfo />
       </div>
     </div>
   );
