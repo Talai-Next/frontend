@@ -15,18 +15,22 @@ import api from "./api";
 
 function Home() {
   const [line1, setLine1] = useState([]);
-  const getLineOneRoute = async () => {
+  const [lineSpecail, setLineSpecail] = useState([]);
+
+  const fetchData = async () => {
     try{
-      const response = await api.get("/line-one/")
-      console.log("response", response.data);
-      setLine1(response.data || [] );
+      const response1 = await api.get("/line-one/")
+      const responseSpecial = await api.get("/line-special/")
+      console.log("response", response1.data);
+      setLine1(response1.data || [] );
+      setLineSpecail(responseSpecial.data || [])
     } catch (error) {
-      alert(error +"Failed to fetch line 1 route");
+      alert(error +"Failed to fetch data");
     }
   };
 
   useEffect(() => {
-    getLineOneRoute();
+    fetchData();
   }, []);
 
   return (
@@ -37,7 +41,12 @@ function Home() {
         </div>
         <div className='px-5 py-2'>
             <LineCardInfo 
+              line="1"
               data={line1}/>
+            <LineCardInfo 
+              line="พิเศษ"
+              data={lineSpecail}
+            />
       </div>
     </div>
   );
