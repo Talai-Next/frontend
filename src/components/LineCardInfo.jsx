@@ -23,26 +23,31 @@ function LineCardInfo({line, time, lineInfo}){
                             </div>
                         </div>
                     </CardContent>
-                    {stops.map((stop, index) =>
-                    <CardContent className='flex h-38'>
-                        <div className="flex flex-col w-[50px] justify-center items-center">
-                            {/* Vertical Line - Top Half */}
-                            <div className="w-[4px] h-11 bg-[#19854B]"></div>
-                            {/* Circle in the center */}
-                            <div className="w-8 h-8 bg-[#19854B] rounded-full"></div>
-                            {/* Vertical Line - Bottom Half */}
-                            <div className="w-[4px] h-11 bg-[#19854B]"></div>
-                        </div>
-                        <div className='flex px-5 w-screen justify-between items-center font-semibold'>
-                            <div>
-                                <h2>[{stop.id}] {stop.name}</h2>
-                            </div>
-                            <div>
-                                <h2 className='text-[#19854B]'>~{stop.time} นาที</h2>
-                            </div>
-                        </div>
-                    </CardContent>
-                    )}   
+    {stops.map((stop, index) => (
+        <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex ml-5 h-36 items-center">
+            {/* Timeline Column */}
+            <div className="flex flex-col flex-1 items-center w-[50px] h-full">
+                {/* Top Line */}
+                <div className="w-[4px] flex-1 bg-[#19854B]"></div>
+                {/* Stop Circle */}
+                <div className="w-8 h-8 bg-[#19854B] rounded-full"></div>
+                {/* Bottom Line */}
+                <div className="w-[4px] flex-1 bg-[#19854B]"></div>
+            </div>
+    
+            {/* Stop Details */}
+            <div className="flex px-5 h-full w-full justify-between items-center font-semibold">
+                <div>
+                    <h2>[{stop.id}] {stop.name}</h2>
+                </div>
+                <div>
+                    <h2 className="text-[#19854B]">~{stop.time} นาที</h2>
+                </div>
+            </div>
+        </CardContent>
+    ))}
+    
+
                 </Card>
                 
             </Box>
