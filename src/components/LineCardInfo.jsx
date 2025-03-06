@@ -29,7 +29,7 @@ function LineCardInfo({data, line}){
                             </div>
                         </div>
                     </CardContent>
-                <div className={` mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-screen" : "max-h-0"}`}>
+                <div className={` mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-[3500px]" : "max-h-0"}`}>
                 {data.map((stop, index) => (
                     <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex h-36 items-center">
                         {/* Timeline Column */}
