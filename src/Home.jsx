@@ -1,7 +1,7 @@
-"use client"
-import './index.css'
-import LineCardInfo from './components/LineCardInfo';
-import Header from './components/Header';
+"use client";
+import "./index.css";
+import LineCardInfo from "./components/LineCardInfo";
+import Header from "./components/Header";
 import { useState, useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -12,6 +12,8 @@ import "./index.css";
 import TextField from "@mui/material/TextField";
 import KasetsartMap from "./components/KasetsartMap";
 import api from "./api";
+import { RegisterBusStopPlugin } from "./plugins/BusStopMarkers";
+import { PluginProvider } from "./core/PluginManager";
 
 function Home() {
   const [line1, setLine1] = useState([]);
@@ -30,7 +32,7 @@ function Home() {
       setLine5(response5.data || []);
       setLineSpecail(responseSpecial.data || [])
     } catch (error) {
-      alert(error +"Failed to fetch data");
+      alert(error + "Failed to fetch data");
     }
   };
 
