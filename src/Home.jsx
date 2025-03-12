@@ -17,14 +17,20 @@ import { PluginProvider } from "./core/PluginManager";
 
 function Home() {
   const [line1, setLine1] = useState([]);
+  const [line3, setLine3] = useState([]);
+  const [line5, setLine5] = useState([]);
   const [lineSpecail, setLineSpecail] = useState([]);
 
   const fetchData = async () => {
-    try {
-      const response1 = await api.get("/api/line-one/");
-      const responseSpecial = await api.get("/api/line-special/");
+    try{
+      const response1 = await api.get("/api/line-one/")
+      const response3 = await api.get("/api/line-three/")
+      const response5 = await api.get("/api/line-five/")
+      const responseSpecial = await api.get("/api/line-special/")
       setLine1(response1.data || []);
-      setLineSpecail(responseSpecial.data || []);
+      setLine3(response3.data || []);
+      setLine5(response5.data || []);
+      setLineSpecail(responseSpecial.data || [])
     } catch (error) {
       alert(error + "Failed to fetch data");
     }
@@ -35,15 +41,27 @@ function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col w-screen">
-      <Header />
-      <PluginProvider>
-        <RegisterBusStopPlugin />
-        <KasetsartMap />
-      </PluginProvider>
-      <div className="px-5 py-2">
-        <LineCardInfo line="1" data={line1} />
-        <LineCardInfo line="พิเศษ" data={lineSpecail} />
+      <div className='flex flex-col w-screen'>
+        <Header />
+        <div>
+            <KasetsartMap />
+        </div>
+        <div className='px-5 py-2'>
+            <LineCardInfo 
+              line="1"
+              data={line1}/>
+            <LineCardInfo 
+              line="3"
+              data={line3}
+            />
+            <LineCardInfo 
+              line="5"
+              data={line5}
+            />
+            <LineCardInfo 
+              line="พิเศษ"
+              data={lineSpecail}
+            />
       </div>
     </div>
   );
