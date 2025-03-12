@@ -39,11 +39,22 @@ function SearchBar(){
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-        <div className="flex flex-col">
+        <div className="flex flex-col relative shadow-md">
         {list.length > 0 && (
-                <div>
+                <div className="flex flex-col items-start ">
                     {list.map((station) => (
-                        <Button variant="text">{station.station_code}:{station.name}</Button>
+                        <Button
+                         variant="text"
+                         sx={{ 
+                          textAlign: "left", 
+                          width: "100%", 
+                          justifyContent: "flex-start", 
+                          position: "relative", 
+                          zIndex: 0
+                        }}
+                         >
+                          {station.station_code}:{station.name}
+                        </Button>
                     ))}
                 </div>
             )}
