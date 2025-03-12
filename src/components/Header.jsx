@@ -2,6 +2,7 @@ import { LiaHomeSolid } from "react-icons/lia";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoColorFillOutline } from "react-icons/io5";
 import TextField from "@mui/material/TextField";
+import SearchBar from "./SearchBar";
 
 function Header() {
 
@@ -26,12 +27,7 @@ function Header() {
             
         </div>
         <div className='my-2 mx-5'>
-            <TextField
-                id="outlined-basic"
-                variant="outlined"
-                fullWidth
-                label="Search"
-                />
+            <SearchBar />
         </div>
       </div>
   )
