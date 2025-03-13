@@ -7,7 +7,7 @@ import api from "../api";
 import { RegisterBusStopPlugin } from "../plugins/BusStopMarkers";
 import { PluginProvider } from "../core/PluginManager";
 import { RegisterCrosswalkPlugin } from "../plugins/CrosswalkMarkers";
-import { RegisterCarBumpPlugin } from "../plugins/CarBumpMarker";
+import { RegisterSpeedBouncePlugin } from "../plugins/SpeedBounceMarker";
 
 function Home() {
   const [line1, setLine1] = useState([]);
@@ -30,11 +30,10 @@ function Home() {
 
   return (
     <div className="flex flex-col w-screen">
-      {/* <Header /> */}
       <PluginProvider>
         <RegisterBusStopPlugin />
         <RegisterCrosswalkPlugin />
-        <RegisterCarBumpPlugin />
+        <RegisterSpeedBouncePlugin />
         <KasetsartMap />
       </PluginProvider>
       <div className="px-5 py-2">

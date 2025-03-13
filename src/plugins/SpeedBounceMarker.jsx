@@ -2,7 +2,7 @@ import MarkerPlugin from "./MarkerPlugin";
 import { usePlugins } from "../core/PluginManager";
 import React, { useEffect } from "react";
 
-const CarBumpMarker = () => {
+const SpeedBounceMarker = () => {
   return (
     <MarkerPlugin
       apiUrl="/api/obstacle-marker/2/"
@@ -13,13 +13,13 @@ const CarBumpMarker = () => {
   );
 };
 
-export default CarBumpMarker;
+export default SpeedBounceMarker;
 
-export const RegisterCarBumpPlugin = () => {
+export const RegisterSpeedBouncePlugin = () => {
   const { registerPlugin } = usePlugins();
 
   useEffect(() => {
-    registerPlugin({ name: "CarBumpMarker", component: <CarBumpMarker /> });
+    registerPlugin({ name: "SpeedBounceMarker", component: <SpeedBounceMarker /> });
   }, [registerPlugin]);
 
   return null;
