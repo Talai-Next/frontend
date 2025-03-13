@@ -9,50 +9,24 @@ import api from "./api";
 import { useSearchParams } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Search from "./components/Search";
-
+import useFetchData from "./hooks/FetchData";
 function Home() {
   const [searchParams] = useSearchParams();
-  const [stationdata, setStationdata] = useState([]);
+  const { stationData, line1, line3, line5, lineSpecail, loading } = useFetchData();  // Use custom hook
   const [destinationStation, setDestinationStation] = useState({})
-  const [line1, setLine1] = useState([]);
-  const [line3, setLine3] = useState([]);
-  const [line5, setLine5] = useState([]);
-  const [lineSpecail, setLineSpecail] = useState([]);
- 
-  const fetchData = async () => {
-    try{
-      const response = await api.get("/api/bus-stop-location/");
-      const response1 = await api.get("/api/line-one/")
-      // const response3 = await api.get("/api/line-three/")
-      // const response5 = await api.get("/api/line-five/")
-      const responseSpecial = await api.get("/api/line-special/")
-      setStationdata(response.data || []);
-      setLine1(response1.data || []);
-      // setLine3(response3.data || []);
-      // setLine5(response5.data || []);
-      setLineSpecail(responseSpecial.data || [])
-    } catch (error) {
-      alert(error + "Failed to fetch data");
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-    
-  }, []);
-
   function retrieveDestinationStation(){
     const desParams = searchParams.get('des');
     const destinationId = desParams ? atob(desParams) : null;
-    const station = destinationId ? stationdata.find((station) => station.id == destinationId) : null
+    const station = destinationId ? stationData.find((station) => station.id == destinationId) : null
     setDestinationStation(station)
   }
 
   useEffect(() => {
     retrieveDestinationStation();
     
-  }, [searchParams, stationdata]);
+  }, [searchParams, stationData]);
 
+  console.log(destinationStation ? destinationStation.name : "nodata")
   return (
       <div className='flex flex-col w-screen'>
         <Header />
