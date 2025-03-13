@@ -12,11 +12,13 @@ function Search({des, cur}){
                 <div className="mb-5">
                     <SearchBar 
                         searchLable="ตำแหน่งของคุณ"
-                        value={cur ? cur.name : null}/>
+                        value={cur ? cur.name : null}
+                        state="cur"/>
                 </div>
                 <SearchBar 
                     searchLable="กำลังนำทางไป"
-                    value={des ? des.name : null }/>
+                    value={des ? des.name : null }
+                    state="des"/>
             </div>
         </div>
     )

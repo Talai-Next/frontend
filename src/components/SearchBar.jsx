@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import api from "../api";
-import { useNavigate } from "react-router-dom"; 
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
 
-
-function SearchBar({searchLable,value}){
+function SearchBar({searchLable,value,state}){
   const [isButtonOpen, setIsButtonOpen] = useState(true)
   const [input, setInput] = useState("");
   const [list, setList] = useState([]);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  // retrive old route
+  const curId = searchParams.get('cur') || '';
+  const desId = searchParams.get('des') || '';
+  
+  // remember old input value
   useEffect(() => {
     if (value) {
       // If value is passed, set the input to it
@@ -18,6 +25,7 @@ function SearchBar({searchLable,value}){
     }
   }, [value]);
 
+  // fetch search result
   useEffect(() => {
     if (input.trim() === "") {
       // when input is empty
@@ -50,10 +58,26 @@ function SearchBar({searchLable,value}){
     fetchData();
   }, [input]); // Runs when `input` changes
 
+  // navigate search
   function handleSearch(stationId){
     setIsButtonOpen(false);
     const encodedId = btoa(stationId)
-    navigate(`/?des=${encodedId}`); // Pass the input as a query parameter to the root URL
+    if(state == "des"){
+      searchParams.set('cur', curId);
+      searchParams.set('des', encodedId);
+      navigate({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+      });
+    }else{
+      searchParams.set('cur', encodedId);
+      searchParams.set('des', desId);
+      navigate({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+      });
+    }
+    
   };
 
   const handleKeyPress = (e) => {
@@ -64,7 +88,21 @@ function SearchBar({searchLable,value}){
         const station = list.find(item => item.name == input)
       if (station){
         const encodedId = btoa(station.id)
-        navigate(`/?des=${encodedId}`);
+        if(state == "des"){
+          params.set('cur', curId);
+          params.set('des', encodedId);
+          navigate({
+            pathname: location.pathname,
+            search: params.toString(),
+          });
+        }else{
+          params.set('cur', encodedId);
+          params.set('des', desId);
+          navigate({
+            pathname: location.pathname,
+            search: params.toString(),
+          });
+        }
       } else {
         alert("This station is not existed")
       }

@@ -40,21 +40,20 @@ function Home() {
     
   }, [searchParams, stationData]);
 
-  console.log(destinationStation ? destinationStation.name : "nodata")
-  console.log(nearestStation)
   return (
       <div className='flex flex-col w-screen'>
         <Header />
         {destinationStation ? (
           <div className='my-2 mx-5'>
             <Search 
-              cur={nearStation ? nearStation : null}
+              cur={currentStation ? currentStation : null}
               des={destinationStation ? destinationStation : null}/>
           </div>
         ) :(
           <div className='my-2 mx-5'>
             <SearchBar 
-              searchLable="ค้นหาที่นี่"/>
+              searchLable="ค้นหาที่นี่"
+              state="des"/>
           </div>
           
         )
