@@ -14,11 +14,11 @@ import useNearestStation from "./hooks/NearestStation"
 
 function Home() {
   const [searchParams] = useSearchParams();
-  const { stationData, line1, line3, line5, lineSpecail, loading } = useFetchData();  // Use custom hook
+  const { stationData, line1, line3, line5, lineSpecail} = useFetchData();  // Use custom hook
   const [destinationStation, setDestinationStation] = useState({})
   const [currentStation, setCurrentStation] = useState({})
   const navigate = useNavigate();
-  const { nearestStation, fetchNearesStation } = useNearestStation();
+  const { nearestStation, fetchNearestStation } = useNearestStation();
   const nearStation = nearestStation;
 
   function retrieveCurrentStation(){
@@ -36,6 +36,7 @@ function Home() {
   }
 
   useEffect(() => {
+    // auto find nearest station
     if(!currentStation){
       {setCurrentStation(nearStation)}
       const encodedId = btoa(nearStation.id)
