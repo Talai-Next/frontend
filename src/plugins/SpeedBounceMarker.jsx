@@ -20,7 +20,7 @@ export const RegisterSpeedBouncePlugin = () => {
 
   useEffect(() => {
     registerPlugin({ name: "SpeedBounceMarker", component: <SpeedBounceMarker /> });
-  }, [registerPlugin]);
+  }, []);
 
   return null;
 };

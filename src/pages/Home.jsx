@@ -8,6 +8,7 @@ import { RegisterBusStopPlugin } from "../plugins/BusStopMarkers";
 import { PluginProvider } from "../core/PluginManager";
 import { RegisterCrosswalkPlugin } from "../plugins/CrosswalkMarkers";
 import { RegisterSpeedBouncePlugin } from "../plugins/SpeedBounceMarker";
+import MarkerSetting from "../components/MarkerSetting";
 
 function Home() {
   const [line1, setLine1] = useState([]);
@@ -20,7 +21,7 @@ function Home() {
       setLine1(response1.data || []);
       setLineSpecail(responseSpecial.data || []);
     } catch (error) {
-      alert(error + "Failed to fetch data");
+      alert(error + " Failed to fetch data");
     }
   };
 
@@ -29,16 +30,26 @@ function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col w-screen">
+    <div className="flex flex-col w-screen min-h-screen">
+
       <PluginProvider>
         <RegisterBusStopPlugin />
         <RegisterCrosswalkPlugin />
         <RegisterSpeedBouncePlugin />
-        <KasetsartMap />
+        <div className="h-[60vh]">
+          <KasetsartMap />
+        </div>
       </PluginProvider>
-      <div className="px-5 py-2">
-        <LineCardInfo line="1" data={line1} />
-        <LineCardInfo line="พิเศษ" data={lineSpecail} />
+
+      <div className="flex flex-col md:flex-row w-full p-5 gap-6">
+        <div className="flex-1 space-y-4 py-10">
+          <LineCardInfo line="1" data={line1} />
+          <LineCardInfo line="พิเศษ" data={lineSpecail} />
+        </div>
+
+        <div className="w-full md:w-[400px]">
+          <MarkerSetting />
+        </div>
       </div>
     </div>
   );
