@@ -1,8 +1,6 @@
 import { LiaHomeSolid } from "react-icons/lia";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoColorFillOutline } from "react-icons/io5";
-import TextField from "@mui/material/TextField";
-import SearchBar from "./SearchBar";
 
 function Header() {
 
