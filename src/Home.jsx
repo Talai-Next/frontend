@@ -10,10 +10,23 @@ import { useSearchParams } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Search from "./components/Search";
 import useFetchData from "./hooks/FetchData";
+import useNearestStation from "./hooks/NearestStation"
+
 function Home() {
   const [searchParams] = useSearchParams();
   const { stationData, line1, line3, line5, lineSpecail, loading } = useFetchData();  // Use custom hook
   const [destinationStation, setDestinationStation] = useState({})
+  const [currentStation, setCurrentStation] = useState({})
+  const { nearestStation, fetchNearesStation } = useNearestStation();
+  const nearStation = nearestStation;
+
+  function retrieveCurrentStation(){
+    const curParams = searchParams.get('cur');
+    const currentId = curParams ? atob(curParams) : null;
+    const station = currentId ? stationData.find((station) => station.id == currentId) : null
+    setCurrentStation(station)
+  }
+
   function retrieveDestinationStation(){
     const desParams = searchParams.get('des');
     const destinationId = desParams ? atob(desParams) : null;
@@ -23,23 +36,27 @@ function Home() {
 
   useEffect(() => {
     retrieveDestinationStation();
+    retrieveCurrentStation()
     
   }, [searchParams, stationData]);
 
   console.log(destinationStation ? destinationStation.name : "nodata")
+  console.log(nearestStation)
   return (
       <div className='flex flex-col w-screen'>
         <Header />
         {destinationStation ? (
           <div className='my-2 mx-5'>
             <Search 
-              des={destinationStation.name ? destinationStation.name : null}/>
+              cur={nearStation ? nearStation : null}
+              des={destinationStation ? destinationStation : null}/>
           </div>
         ) :(
           <div className='my-2 mx-5'>
             <SearchBar 
               searchLable="ค้นหาที่นี่"/>
           </div>
+          
         )
       }
         <div>

@@ -1,5 +1,6 @@
 import api from "../api";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useGeolocated } from "react-geolocated";
 
 export default function useNearestStation() {
     const [nearestStation, setNearestStation] = useState(null)
@@ -21,12 +22,12 @@ export default function useNearestStation() {
     }, [coords, isGeolocationAvailable, isGeolocationEnabled]);
 
     const fetchNearestStation = useCallback(async () => {
-        if (!coord) return; // ถ้าไม่มีพิกัด ไม่ต้องทำอะไร
+        if (!coord) return; 
         try {
             const response = await api.get(
                 `/api/search-nearby-station/?lat=${coord.latitude}&lon=${coord.longitude}`
             );
-            setNearestStation(response.data); // อัปเดต state ด้วยข้อมูลสถานีที่ใกล้ที่สุด
+            setNearestStation(response.data); 
         } catch (error) {
             alert("Failed to fetch data:", error);
         }
@@ -35,5 +36,5 @@ export default function useNearestStation() {
     useEffect(()=>{
         fetchNearestStation();
     }, [fetchNearestStation]);
-    return { nearestStation, fetchNearesStation };
+    return { nearestStation, fetchNearestStation };
 }
