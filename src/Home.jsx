@@ -15,6 +15,7 @@ import api from "./api";
 import { RegisterBusStopPlugin } from "./plugins/BusStopMarkers";
 import { PluginProvider } from "./core/PluginManager";
 import { RegisterCrosswalkPlugin } from "./plugins/CrosswalkMarkers";
+import { RegisterCarBumpPlugin } from "./plugins/CarBumpMarker";
 
 function Home() {
   const [line1, setLine1] = useState([]);
@@ -41,6 +42,7 @@ function Home() {
       <PluginProvider>
         <RegisterBusStopPlugin />
         <RegisterCrosswalkPlugin />
+        <RegisterCarBumpPlugin />
         <KasetsartMap />
       </PluginProvider>
       <div className="px-5 py-2">
