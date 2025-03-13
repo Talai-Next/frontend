@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import SettingPage from "./pages/SettingPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Header from "./components/Header";
+// import "./index.css";
 
 function App() {
   return (

@@ -1,5 +1,5 @@
 "use client";
-import "../styles/home.css";
+import "../index.css";
 import LineCardInfo from "../components/LineCardInfo";
 import { useState, useEffect } from "react";
 import KasetsartMap from "../components/KasetsartMap";

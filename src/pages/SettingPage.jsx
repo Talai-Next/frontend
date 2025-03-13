@@ -1,8 +1,12 @@
-import React from 'react'
+import { Label } from "@/components/ui/label"
+import { Switch } from "@/components/ui/switch"
 
 const SettingPage = () => {
   return (
-    <div>SettingPage</div>
+    <div className="flex items-center space-x-2">
+      <Switch />
+      <Label htmlFor="airplane-mode">Airplane Mode</Label>
+    </div>
   )
 }
 
