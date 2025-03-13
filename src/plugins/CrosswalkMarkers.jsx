@@ -15,12 +15,18 @@ const CrosswalkMarker = () => {
 
 export default CrosswalkMarker;
 
-export const RegisterCrosswalkPlugin = () => {
-  const { registerPlugin } = usePlugins();
+export const RegisterCrosswalkPlugin = ({ isVisible }) => {
+  const { registerPlugin, unregisterPlugin } = usePlugins();
 
   useEffect(() => {
-    registerPlugin({ name: "CrosswalkMarker", component: <CrosswalkMarker /> });
-  }, []);
+    if (isVisible) {
+      registerPlugin({ name: "CrosswalkMarker", component: <CrosswalkMarker /> });
+    } else {
+      unregisterPlugin("CrosswalkMarker");
+    }
+    
+    return () => unregisterPlugin("CrosswalkMarker");
+  }, [isVisible]);
 
   return null;
 };

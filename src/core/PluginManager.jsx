@@ -14,8 +14,12 @@ export const PluginProvider = ({ children }) => {
     setPlugins((prev) => [...prev, plugin]);
   };
 
+  const unregisterPlugin = (pluginName) => {
+    setPlugins((prev) => prev.filter((p) => p.name !== pluginName));
+  };
+
   return (
-    <PluginContext.Provider value={{ plugins, registerPlugin }}>
+    <PluginContext.Provider value={{ plugins, registerPlugin, unregisterPlugin }}>
       {children}
     </PluginContext.Provider>
   );

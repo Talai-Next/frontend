@@ -16,12 +16,18 @@ const BusStopMarker = () => {
 
 export default BusStopMarker;
 
-export const RegisterBusStopPlugin = () => {
-  const { registerPlugin } = usePlugins();
+export const RegisterBusStopPlugin = ({ isVisible }) => {
+  const { registerPlugin, unregisterPlugin } = usePlugins();
 
   useEffect(() => {
-    registerPlugin({ name: "BusStopMarker", component: <BusStopMarker /> });
-  }, []);
+    if (isVisible) {
+      registerPlugin({ name: "BusStopMarker", component: <BusStopMarker /> });
+    } else {
+      unregisterPlugin("BusStopMarker");
+    }
+    
+    return () => unregisterPlugin("BusStopMarker");
+  }, [isVisible]);
 
   return null;
 };

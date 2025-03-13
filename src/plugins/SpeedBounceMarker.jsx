@@ -15,12 +15,18 @@ const SpeedBounceMarker = () => {
 
 export default SpeedBounceMarker;
 
-export const RegisterSpeedBouncePlugin = () => {
-  const { registerPlugin } = usePlugins();
+export const RegisterSpeedBouncePlugin = ({ isVisible }) => {
+  const { registerPlugin, unregisterPlugin } = usePlugins();
 
   useEffect(() => {
-    registerPlugin({ name: "SpeedBounceMarker", component: <SpeedBounceMarker /> });
-  }, []);
+    if (isVisible) {
+      registerPlugin({ name: "SpeedBounceMarker", component: <SpeedBounceMarker /> });
+    } else {
+      unregisterPlugin("SpeedBounceMarker");
+    }
+    
+    return () => unregisterPlugin("SpeedBounceMarker");
+  }, [isVisible]);
 
   return null;
 };

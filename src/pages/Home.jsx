@@ -11,6 +11,10 @@ import { RegisterSpeedBouncePlugin } from "../plugins/SpeedBounceMarker";
 import MarkerSetting from "../components/MarkerSetting";
 
 function Home() {
+  const [showBusstop, setShowBusstop] = useState(true);
+  const [showCrosswalk, setShowCrosswalk] = useState(false);
+  const [showSpeedBump, setShowSpeedBump] = useState(false);
+
   const [line1, setLine1] = useState([]);
   const [lineSpecail, setLineSpecail] = useState([]);
 
@@ -31,11 +35,10 @@ function Home() {
 
   return (
     <div className="flex flex-col w-screen min-h-screen">
-
       <PluginProvider>
-        <RegisterBusStopPlugin />
-        <RegisterCrosswalkPlugin />
-        <RegisterSpeedBouncePlugin />
+        <RegisterBusStopPlugin isVisible={showBusstop} />
+        <RegisterCrosswalkPlugin isVisible={showCrosswalk} />
+        <RegisterSpeedBouncePlugin isVisible={showSpeedBump} />
         <div className="h-[60vh]">
           <KasetsartMap />
         </div>
@@ -48,7 +51,14 @@ function Home() {
         </div>
 
         <div className="w-full md:w-[400px]">
-          <MarkerSetting />
+          <MarkerSetting
+            showBusstop={showBusstop}
+            showCrosswalk={showCrosswalk}
+            showSpeedBump={showSpeedBump}
+            setShowBusstop={setShowBusstop}
+            setShowCrosswalk={setShowCrosswalk}
+            setShowSpeedBump={setShowSpeedBump}
+          />
         </div>
       </div>
     </div>
