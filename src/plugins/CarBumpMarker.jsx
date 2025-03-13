@@ -6,7 +6,7 @@ const CarBumpMarker = () => {
   return (
     <MarkerPlugin
       apiUrl="/api/obstacle-marker/2/"
-      iconUrl="https://cdn1.iconfinder.com/data/icons/vibrancie-map/30/map_024-location-marker-warning-pin-alert-512.png"
+      iconUrl="https://cdn-icons-png.flaticon.com/128/15584/15584667.png"
       iconSize={[30, 30]}
       iconAnchor={[11, 30]}
     />

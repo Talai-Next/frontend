@@ -6,7 +6,7 @@ const CrosswalkMarker = () => {
   return (
     <MarkerPlugin
       apiUrl="/api/obstacle-marker/1/"
-      iconUrl="https://cdn-icons-png.flaticon.com/128/7902/7902177.png"
+      iconUrl="https://cdn-icons-png.flaticon.com/128/10981/10981039.png"
       iconSize={[30, 30]}
       iconAnchor={[11, 30]}
     />
