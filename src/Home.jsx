@@ -3,30 +3,30 @@ import "./index.css";
 import LineCardInfo from "./components/LineCardInfo";
 import Header from "./components/Header";
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import { LiaHomeSolid } from "react-icons/lia";
-import { TbReportAnalytics } from "react-icons/tb";
-import { IoColorFillOutline } from "react-icons/io5";
 import "./index.css";
-import TextField from "@mui/material/TextField";
 import KasetsartMap from "./components/KasetsartMap";
 import api from "./api";
-import { RegisterBusStopPlugin } from "./plugins/BusStopMarkers";
-import { PluginProvider } from "./core/PluginManager";
+import { useSearchParams } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
+import Search from "./components/Search";
+
 function Home() {
+  const [searchParams] = useSearchParams();
+  const [stationdata, setStationdata] = useState([]);
+  const [destinationStation, setDestinationStation] = useState({})
   const [line1, setLine1] = useState([]);
   const [line3, setLine3] = useState([]);
   const [line5, setLine5] = useState([]);
   const [lineSpecail, setLineSpecail] = useState([]);
-
+ 
   const fetchData = async () => {
     try{
+      const response = await api.get("/api/bus-stop-location/");
       const response1 = await api.get("/api/line-one/")
       // const response3 = await api.get("/api/line-three/")
       // const response5 = await api.get("/api/line-five/")
       const responseSpecial = await api.get("/api/line-special/")
+      setStationdata(response.data || []);
       setLine1(response1.data || []);
       // setLine3(response3.data || []);
       // setLine5(response5.data || []);
@@ -38,11 +38,36 @@ function Home() {
 
   useEffect(() => {
     fetchData();
+    
   }, []);
+
+  function retrieveDestinationStation(){
+    const desParams = searchParams.get('des');
+    const destinationId = desParams ? atob(desParams) : null;
+    const station = destinationId ? stationdata.find((station) => station.id == destinationId) : null
+    setDestinationStation(station)
+  }
+
+  useEffect(() => {
+    retrieveDestinationStation();
+    
+  }, [searchParams, stationdata]);
 
   return (
       <div className='flex flex-col w-screen'>
         <Header />
+        {destinationStation ? (
+          <div className='my-2 mx-5'>
+            <Search 
+              des={destinationStation.name ? destinationStation.name : null}/>
+          </div>
+        ) :(
+          <div className='my-2 mx-5'>
+            <SearchBar 
+              searchLable="ค้นหาที่นี่"/>
+          </div>
+        )
+      }
         <div>
             <KasetsartMap />
         </div>
