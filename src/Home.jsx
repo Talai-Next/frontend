@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import "./index.css";
 import KasetsartMap from "./components/KasetsartMap";
 import api from "./api";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Search from "./components/Search";
 import useFetchData from "./hooks/FetchData";
@@ -17,6 +17,7 @@ function Home() {
   const { stationData, line1, line3, line5, lineSpecail, loading } = useFetchData();  // Use custom hook
   const [destinationStation, setDestinationStation] = useState({})
   const [currentStation, setCurrentStation] = useState({})
+  const navigate = useNavigate();
   const { nearestStation, fetchNearesStation } = useNearestStation();
   const nearStation = nearestStation;
 
@@ -35,8 +36,15 @@ function Home() {
   }
 
   useEffect(() => {
+    if(!currentStation){
+      {setCurrentStation(nearStation)}
+      const encodedId = btoa(nearStation.id)
+      navigate(`/?cur=${encodedId}`)
+    } else {
+      retrieveCurrentStation()
+    }
     retrieveDestinationStation();
-    retrieveCurrentStation()
+    
     
   }, [searchParams, stationData]);
 
