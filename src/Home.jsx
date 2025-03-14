@@ -11,10 +11,13 @@ import SearchBar from "./components/SearchBar";
 import Search from "./components/Search";
 import useFetchData from "./hooks/FetchData";
 import useNearestStation from "./hooks/NearestStation"
+import useAvailableLine from "./hooks/AvailableLine";
 
 function Home() {
   const [searchParams] = useSearchParams();
-  const { stationData, line1, line3, line5, lineSpecail} = useFetchData();  // Use custom hook
+  const [isLoading, setIsLoading] = useState(true)
+  const { stationData, line1, line3, line5, lineSpecail, loading} = useFetchData();  // Use custom hook
+  const { availableLine } = useAvailableLine();
   const [destinationStation, setDestinationStation] = useState({})
   const [currentStation, setCurrentStation] = useState({})
   const navigate = useNavigate();
@@ -35,20 +38,22 @@ function Home() {
     setDestinationStation(station)
   }
 
+
   useEffect(() => {
     // auto find nearest station
-    if(!currentStation){
+    if(!currentStation && nearStation.id){
       {setCurrentStation(nearStation)}
       const encodedId = btoa(nearStation.id)
       navigate(`/?cur=${encodedId}`)
-    } else {
+    } 
+    else {
       retrieveCurrentStation()
     }
     retrieveDestinationStation();
     
-    
   }, [searchParams, stationData]);
 
+  
   return (
       <div className='flex flex-col w-screen'>
         <Header />
@@ -70,23 +75,76 @@ function Home() {
         <div>
             <KasetsartMap />
         </div>
-        <div className='px-5 py-2'>
+        {loading ? (
+          <div>
+            Loading ...
+          </div>
+        ) : (
+          <div className='px-5 py-2'>
+          {/* Render available lines first */}
+          {availableLine.includes("1") && (
             <LineCardInfo 
               line="1"
-              data={line1}/>
+              data={line1}
+              isDisable={false}
+            />
+          )}
+          {availableLine.includes("3") && (
             <LineCardInfo 
               line="3"
               data={line3}
+              isDisable={false}
             />
+          )}
+          {availableLine.includes("5") && (
             <LineCardInfo 
               line="5"
               data={line5}
+              isDisable={false}
             />
+          )}
+          {availableLine.includes("s") && (
             <LineCardInfo 
               line="พิเศษ"
               data={lineSpecail}
+              isDisable={false}
             />
-      </div>
+          )}
+        
+          {/* Render disabled lines */}
+          {(!availableLine.includes("1")) && (
+            <LineCardInfo 
+              line="1"
+              data={line1}
+              isDisable={true}
+            />
+          )}
+          {(!availableLine.includes("3")) && (
+            <LineCardInfo 
+              line="3"
+              data={line3}
+              isDisable={true}
+            />
+          )}
+          {(!availableLine.includes("5")) && (
+            <LineCardInfo 
+              line="5"
+              data={line5}
+              isDisable={true}
+            />
+          )}
+          {(!availableLine.includes("s")) && (
+            <LineCardInfo 
+              line="พิเศษ"
+              data={lineSpecail}
+              isDisable={true}
+            />
+          )}
+        </div>
+        
+          
+        ) }
+        
     </div>
   );
 }

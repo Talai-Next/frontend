@@ -1,11 +1,13 @@
 import { Box, Card, CardActions, CardContent} from '@mui/material';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
 import { useState } from 'react';
-function LineCardInfo({data, line}){
+import { GoAlertFill } from "react-icons/go";
+
+function LineCardInfo({data, line, isDisable}){
     const [isOpen, setIsOpen] = useState(false);
     const handleClick = () => {
         // Toggle visibility of the next CardContent
-        console.log(`opem card`);
+        console.log(`open card`);
         setIsOpen(!isOpen);
       };
     return(
@@ -14,12 +16,23 @@ function LineCardInfo({data, line}){
                 <Card className='shadow-none' elevation={0} >
                     <CardContent 
                         onClick={() => handleClick()}
-                        className='flex flex-col bg-[#B4D4C3] cursor-pointer rounded-3xl hover:bg-[#9BC0AD]' 
+                            className={`flex flex-col bg-[#B4D4C3] cursor-pointer rounded-3xl hover:bg-[#9BC0AD] ${isDisable == true ? "opacity-30" : "opacity-100"}`}
                     >
                         <div className='flex py-3 px-5 justify-between items-center'>
-                            <div>
+                            <div className='w-full'>
                                 <h2 className='font-semibold'>สาย {line}</h2>
-                                <p className='mt-2'>12 นาทีถึงที่ที่คุณอยู่</p>
+                                {isDisable == true ? (
+                                    <div className='flex justify-between'>
+                                            <p className='mt-2 text-red-700'>สายนี้ไม่ผ่านป้ายทีอยู่ใกล้ที่สุดของคุณ</p>
+                                        <div className='px-5'>
+                                            <GoAlertFill 
+                                                color='red'
+                                                size={30}/>
+                                        </div>
+                                    </div>
+                                ):
+                                    <p className='mt-2'>12 นาทีถึงที่ที่คุณอยู่</p>
+                                }
                             </div>
                             <div>
                                 {isOpen ? (
