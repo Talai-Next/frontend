@@ -24,6 +24,7 @@ function Search({des, cur}){
             </div>
             <div className="flex flex-col mx-5">
                 <NearestStationButton />
+                
                 <div className="flex mt-2 justify-center items-center">
                     <SwapButton />
                 </div>

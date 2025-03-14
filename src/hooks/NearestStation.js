@@ -1,8 +1,12 @@
 import api from "../api";
 import { useState, useEffect, useCallback } from "react";
 import { useGeolocated } from "react-geolocated";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
 
 export default function useNearestStation() {
+    const [searchParams] = useSearchParams();
+    const encodedDes = searchParams.get('des') || null;
+    const des = atob(encodedDes)
     const [nearestStation, setNearestStation] = useState(null)
     const [coord, setCoord] = useState(null)
     const { coords, isGeolocationAvailable, isGeolocationEnabled } = useGeolocated({
@@ -25,7 +29,7 @@ export default function useNearestStation() {
         if (!coord) return; 
         try {
             const response = await api.get(
-                `/api/search-nearby-station/?lat=${coord.latitude}&lon=${coord.longitude}`
+                `/api/search-nearby-station/?lat=${coord.latitude}&lon=${coord.longitude}${des ? `&des_id=${des}` : ''}`
             );
             setNearestStation(response.data); 
         } catch (error) {

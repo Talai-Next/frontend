@@ -14,14 +14,14 @@ function useFetchData() {
       try {
         const response = await api.get("/api/bus-stop-location/");
         const response1 = await api.get("/api/line-one/");
-        // const response3 = await api.get("/api/line-three/")
-        // const response5 = await api.get("/api/line-five/")
+        const response3 = await api.get("/api/line-three/")
+        const response5 = await api.get("/api/line-five/")
         const responseSpecial = await api.get("/api/line-special/");
         
         setStationData(response.data || []);
         setLine1(response1.data || []);
-        // setLine3(response3.data || []);
-        // setLine5(response5.data || []);
+        setLine3(response3.data || []);
+        setLine5(response5.data || []);
         setLineSpecail(responseSpecial.data || []);
       } catch (error) {
         alert(error + "Failed to fetch data");

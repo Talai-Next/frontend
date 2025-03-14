@@ -29,7 +29,7 @@ function NearestStationButton(){
                 <Button 
                     variant="contained"
                     onClick={() => handleClick()}   
-                    sx={{height: "55px"}}>
+                    sx={{height: "55px", width: "180px"}}>
                     <MdMyLocation />
                     <p className="ml-2 text-xl">สถานีใกล้ฉัน</p>
                 </Button>
