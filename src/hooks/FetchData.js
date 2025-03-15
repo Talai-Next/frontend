@@ -9,12 +9,7 @@ function useFetchData() {
   const [line3, setLine3] = useState([]);
   const [line5, setLine5] = useState([]);
   const [lineSpecail, setLineSpecail] = useState([]);
-  const [availableLine, setAvailableLine] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // retrieve search params
-  const encodedCur = searchParams.get('cur') || null;
-  const cur = encodedCur ? atob(encodedCur) : null
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,14 +19,12 @@ function useFetchData() {
         const response3 = await api.get("/api/line-three/")
         const response5 = await api.get("/api/line-five/")
         const responseSpecial = await api.get("/api/line-special/");
-        const responseAvailable = await api.get(`/api/available-line/?cur=${cur}`)
         
         setStationData(response.data || []);
         setLine1(response1.data || []);
         setLine3(response3.data || []);
         setLine5(response5.data || []);
         setLineSpecail(responseSpecial.data || []);
-        setAvailableLine(responseAvailable.data || [])
       } catch (error) {
         alert(error + "Failed to fetch data");
       } finally {
@@ -45,7 +38,7 @@ function useFetchData() {
 
 
 
-  return { stationData, line1, line3, line5, lineSpecail, availableLine, loading };
+  return { stationData, line1, line3, line5, lineSpecail, loading };
 }
 
 export default useFetchData;
