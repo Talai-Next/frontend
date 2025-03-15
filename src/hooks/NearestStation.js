@@ -35,7 +35,7 @@ export default function useNearestStation() {
         } catch (error) {
             alert("Failed to fetch data:", error);
         }
-    }, [coord]);
+    }, [coord, searchParams]);
 
     useEffect(()=>{
         fetchNearestStation();

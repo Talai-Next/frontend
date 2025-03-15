@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { TextField, Button } from "@mui/material";
 import api from "../api";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 function SearchBar({ searchLable, value, state }) {
   const [isButtonOpen, setIsButtonOpen] = useState(true);
@@ -16,7 +17,7 @@ function SearchBar({ searchLable, value, state }) {
   const curId = searchParams.get('cur') || '';
   const desId = searchParams.get('des') || '';
   const debounceTimeout = useRef(null);
-
+  
   useEffect(() => {
     if (value) {
       setInput(value);
@@ -117,8 +118,14 @@ function SearchBar({ searchLable, value, state }) {
     }
   };
 
+  function handleDropDownClick() {
+    setList(allStations)
+    setIsButtonOpen(!isButtonOpen);
+  }
+
   return (
     <div>
+      <div className="flex">
       <TextField
         id="outlined-basic"
         variant="outlined"
@@ -128,6 +135,14 @@ function SearchBar({ searchLable, value, state }) {
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyPress}
       />
+      <Button
+        className="absolute -translate-x-15"
+        onClick={handleDropDownClick}
+        >
+          <MdKeyboardArrowDown size={48} color={'black'}/>
+      </Button>
+      </div>
+
       <div className="flex flex-col relative shadow-md">
         {list.length > 0 && isButtonOpen && (
           <div className="flex flex-col items-start">
