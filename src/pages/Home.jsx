@@ -9,6 +9,7 @@ import { PluginProvider } from "../core/PluginManager";
 import { RegisterCrosswalkPlugin } from "../plugins/CrosswalkMarkers";
 import { RegisterSpeedBouncePlugin } from "../plugins/SpeedBounceMarker";
 import MarkerSetting from "../components/MarkerSetting";
+import { RegisterBusMarkerPlugin } from "@/plugins/BusMarker";
 
 function Home() {
   const [showBusstop, setShowBusstop] = useState(true);
@@ -39,6 +40,7 @@ function Home() {
         <RegisterBusStopPlugin isVisible={showBusstop} />
         <RegisterCrosswalkPlugin isVisible={showCrosswalk} />
         <RegisterSpeedBouncePlugin isVisible={showSpeedBump} />
+        <RegisterBusMarkerPlugin isVisible={true} />
         <div className="h-[60vh]">
           <KasetsartMap />
         </div>
