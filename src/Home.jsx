@@ -86,28 +86,25 @@ function Home() {
             <LineCardInfo 
               line="1"
               data={line1}
-              isDisable={false}
+              state="choose"
             />
           )}
           {availableLine.includes("3") && (
             <LineCardInfo 
               line="3"
               data={line3}
-              isDisable={false}
             />
           )}
           {availableLine.includes("5") && (
             <LineCardInfo 
               line="5"
               data={line5}
-              isDisable={false}
             />
           )}
           {availableLine.includes("s") && (
             <LineCardInfo 
               line="พิเศษ"
               data={lineSpecail}
-              isDisable={false}
             />
           )}
         
@@ -116,28 +113,28 @@ function Home() {
             <LineCardInfo 
               line="1"
               data={line1}
-              isDisable={true}
+              state="disable"
             />
           )}
           {(!availableLine.includes("3")) && (
             <LineCardInfo 
               line="3"
               data={line3}
-              isDisable={true}
+              state="disable"
             />
           )}
           {(!availableLine.includes("5")) && (
             <LineCardInfo 
               line="5"
               data={line5}
-              isDisable={true}
+              state="disable"
             />
           )}
           {(!availableLine.includes("s")) && (
             <LineCardInfo 
               line="พิเศษ"
               data={lineSpecail}
-              isDisable={true}
+              state="disable"
             />
           )}
         </div>

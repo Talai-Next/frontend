@@ -1,9 +1,9 @@
 import { Box, Card, CardActions, CardContent} from '@mui/material';
-import { MdKeyboardArrowDown, MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdDepartureBoard  } from "react-icons/md";
 import { useState } from 'react';
 import { GoAlertFill } from "react-icons/go";
 
-function LineCardInfo({data, line, isDisable}){
+function LineCardInfo({data, line, state}){
     const [isOpen, setIsOpen] = useState(false);
     const handleClick = () => {
         // Toggle visibility of the next CardContent
@@ -16,12 +16,12 @@ function LineCardInfo({data, line, isDisable}){
                 <Card className='shadow-none' elevation={0} >
                     <CardContent 
                         onClick={() => handleClick()}
-                            className={`flex flex-col bg-[#B4D4C3] cursor-pointer rounded-3xl hover:bg-[#9BC0AD] ${isDisable == true ? "opacity-30" : "opacity-100"}`}
+                            className={`flex flex-col ${state == "choose" ? "bg-[#58bbff]" :"bg-[#B4D4C3]"} cursor-pointer rounded-3xl ${state == "choose" ? "hover:bg-[#428cf1]" :"hover:bg-[#9BC0AD]"} ${state == "disable" ? "opacity-30" : "opacity-100"}`}
                     >
                         <div className='flex py-3 px-5 justify-between items-center'>
                             <div className='w-full'>
                                 <h2 className='font-semibold'>สาย {line}</h2>
-                                {isDisable == true ? (
+                                {state == "disable" ? (
                                     <div className='flex justify-between'>
                                             <p className='mt-2 text-red-700'>สายนี้ไม่ผ่านป้ายทีอยู่ใกล้ที่สุดของคุณ</p>
                                         <div className='px-5'>
@@ -29,6 +29,21 @@ function LineCardInfo({data, line, isDisable}){
                                                 color='red'
                                                 size={30}/>
                                         </div>
+                                    </div>
+                                ) : state == "choose" ? (
+                                    <div>
+                                        <div className='flex justify-between'>
+                                            <p className='mt-2'>12 นาทีถึงที่ที่คุณอยู่</p>
+                                        <div className='px-5'>
+                                            <div className='flex'>
+                                            <p className='text-white font-bold text-2xl mr-2'>สายที่ต้องขึ้น</p>
+
+                                                <MdDepartureBoard  
+                                                    color='white'
+                                                    size={30}/>
+                                            </div>
+                                        </div>
+                                    </div>
                                     </div>
                                 ):
                                     <p className='mt-2'>12 นาทีถึงที่ที่คุณอยู่</p>

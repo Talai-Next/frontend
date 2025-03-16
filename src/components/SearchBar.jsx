@@ -125,7 +125,7 @@ function SearchBar({ searchLable, value, state }) {
 
   return (
     <div>
-      <div className="flex">
+      <div className="relative w-full">
       <TextField
         id="outlined-basic"
         variant="outlined"
@@ -136,8 +136,14 @@ function SearchBar({ searchLable, value, state }) {
         onKeyDown={handleKeyPress}
       />
       <Button
-        className="absolute -translate-x-15"
+        // className="absolute -translate-x-15"
         onClick={handleDropDownClick}
+        sx={{
+          position: "absolute",
+          right: 0,
+          top: 0,
+          height: "100%"
+        }}
         >
           <MdKeyboardArrowDown size={48} color={'black'}/>
       </Button>
