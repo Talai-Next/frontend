@@ -12,6 +12,7 @@ import Search from "./components/Search";
 import useFetchData from "./hooks/FetchData";
 import useNearestStation from "./hooks/NearestStation"
 import useAvailableLine from "./hooks/AvailableLine";
+import useLineSuggestion from "./hooks/LineSuggestion";
 
 function Home() {
   const [searchParams] = useSearchParams();
@@ -22,6 +23,7 @@ function Home() {
   const [currentStation, setCurrentStation] = useState({})
   const navigate = useNavigate();
   const { nearestStation, fetchNearestStation } = useNearestStation();
+  const { line } = useLineSuggestion();
   const nearStation = nearestStation;
 
   function retrieveCurrentStation(){
@@ -86,25 +88,28 @@ function Home() {
             <LineCardInfo 
               line="1"
               data={line1}
-              state="choose"
+              state={line == "1" ? "choose": null}
             />
           )}
           {availableLine.includes("3") && (
             <LineCardInfo 
               line="3"
               data={line3}
+              state={line == "3" ? "choose": null}
             />
           )}
           {availableLine.includes("5") && (
             <LineCardInfo 
               line="5"
               data={line5}
+              state={line == "5" ? "choose": null}
             />
           )}
           {availableLine.includes("s") && (
             <LineCardInfo 
               line="พิเศษ"
               data={lineSpecail}
+              state={line == "s" ? "choose": null}
             />
           )}
         

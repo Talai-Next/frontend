@@ -31,7 +31,7 @@ function SearchBar({ searchLable, value, state }) {
       try {
         let response;
         if (state === 'des' && desId != "") {
-          response = await api.get(`/api/available-station/?cur=${atob(curId)}`);
+          response = await api.get(`/api/search/available-station/?cur=${atob(curId)}`);
         } else {
           response = await api.get("/api/bus-stop-location/");
         }

@@ -13,8 +13,11 @@ function useAvailableLine() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseAvailable = await api.get(`/api/available-line/?cur=${cur}`)
-        setAvailableLine(responseAvailable.data || [])
+        if (cur){
+          const responseAvailable = await api.get(`/api/search/available-line/?cur=${cur}`)
+          setAvailableLine(responseAvailable.data || [])
+        }
+       
       } catch (error) {
         alert(error + "Failed to fetch available line");
       } 

@@ -29,7 +29,7 @@ export default function useNearestStation() {
         if (!coord) return; 
         try {
             const response = await api.get(
-                `/api/search-nearby-station/?lat=${coord.latitude}&lon=${coord.longitude}${des ? `&des_id=${des}` : ''}`
+                `/api/search/search-nearby-station/?lat=${coord.latitude}&lon=${coord.longitude}${des ? `&des_id=${des}` : ''}`
             );
             setNearestStation(response.data); 
         } catch (error) {
