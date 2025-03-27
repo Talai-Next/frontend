@@ -5,7 +5,7 @@ import { IoColorFillOutline } from "react-icons/io5";
 function Header() {
 
   return (
-      <div className='flex flex-col w-screen'>
+      <div className='flex flex-col w-full'>
         <div className='mt-5 mb-2 flex justify-center items-center'>
             <h2 className='font-bold'>Talai NEXT</h2>
         </div>

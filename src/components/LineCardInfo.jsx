@@ -2,8 +2,12 @@ import { Box, Card, CardActions, CardContent} from '@mui/material';
 import { MdKeyboardArrowDown, MdKeyboardArrowRight, MdDepartureBoard  } from "react-icons/md";
 import { useState } from 'react';
 import { GoAlertFill } from "react-icons/go";
+import { FaBusAlt } from "react-icons/fa";
+import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 
-function LineCardInfo({data, line, state}){
+
+function LineCardInfo({data, line, state, bus}){
+    // bus [json : {bus ,cur station}]
     const [isOpen, setIsOpen] = useState(false);
     const handleClick = () => {
         // Toggle visibility of the next CardContent
@@ -11,7 +15,7 @@ function LineCardInfo({data, line, state}){
         setIsOpen(!isOpen);
       };
     return(
-        <div >
+        <div className="w-full max-w-full">
             <Box >
                 <Card className='shadow-none' elevation={0} >
                     <CardContent 
@@ -58,29 +62,49 @@ function LineCardInfo({data, line, state}){
                         </div>
                     </CardContent>
                 <div className={` mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-[3500px]" : "max-h-0"}`}>
-                {data.map((stop, index) => (
-                    <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex h-36 items-center">
-                        {/* Timeline Column */}
-                        <div className="flex flex-col flex-1 items-center w-[50px] h-full">
-                            {/* Top Line */}
-                            <div className="w-[4px] flex-1 bg-[#19854B]"></div>
-                            {/* Stop Circle */}
-                            <div className="w-8 h-8 bg-[#19854B] rounded-full"></div>
-                            {/* Bottom Line */}
-                            <div className="w-[4px] flex-1 bg-[#19854B]"></div>
-                        </div>
-                
-                        {/* Stop Details */}
-                        <div className="flex px-5 h-full w-full justify-between items-center font-semibold">
-                            <div>
-                                <h2>[{stop.station.station_code}] {stop.station.name}</h2>
+                    {data.map((stop, index) => {
+                        const isBusHere = bus.some((b) => b.cur === stop.station.id);
+                        return(
+                        <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex h-36 items-center">
+                            {/* Timeline Column */}
+                            <div className="flex flex-col flex-1 items-center w-[50px] h-full">
+                                {/* Top Line */}
+                                <div className="w-[4px] flex-1 bg-[#19854B]"></div>
+                                {/* Stop Circle */}
+                                {isBusHere ? (
+                                    // show this one when there is bus with cur == station id 
+                                    <div className="flex relative">
+                                        <div className="w-16 h-16 bg-[#428cf1] rounded-full animate-bounce flex items-center justify-center">
+                                            <FaBusAlt 
+                                                color='white'
+                                                size={28}/>
+                                        </div>
+                                        <div className="absolute bottom-[-70%] left-1/2 -translate-x-1/2 w-10 h-10 bg-transparent flex items-center justify-center z-10 animate-bounce">
+                                            <MdKeyboardDoubleArrowDown size={72} color={"#19854B"}/>
+                                        </div>
+                                    </div>
+                                    
+                                    ) : (
+                                //  show this one when no bus 
+                                <div className="w-12 h-12 bg-[#19854B] rounded-full"></div>
+                                    )}
+                                
+                                {/* Bottom Line */}
+                                <div className="w-[4px] flex-1 bg-[#19854B]"></div>
                             </div>
-                            <div>
-                                <h2 className="text-[#19854B]">~3 นาที</h2>
+                    
+                            {/* Stop Details */}
+                            <div className="flex px-5 h-full w-full justify-between items-center font-semibold">
+                                <div>
+                                    <h2>[{stop.station.station_code}] {stop.station.name}</h2>
+                                </div>
+                                <div>
+                                    <h2 className="text-[#19854B]">~3 นาที</h2>
+                                </div>
                             </div>
-                        </div>
-                    </CardContent>
-                ))}
+                        </CardContent>
+                        )
+                    })}
                 </div>
 
                 </Card>

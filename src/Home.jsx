@@ -55,9 +55,11 @@ function Home() {
     
   }, [searchParams, stationData]);
 
+  // bus dummy data
+  const bus = [{bus:1, cur:3},{bus:2,cur:4},{bus:3,cur:8}]
   
   return (
-      <div className='flex flex-col w-screen'>
+      <div className='flex flex-col min-w-screen h-full overflow-hidden'>
         <Header />
         {destinationStation ? (
           <div className='my-2 mx-5'>
@@ -89,6 +91,7 @@ function Home() {
               line="1"
               data={line1}
               state={line == "1" ? "choose": null}
+              bus={bus}
             />
           )}
           {availableLine.includes("3") && (
@@ -96,6 +99,7 @@ function Home() {
               line="3"
               data={line3}
               state={line == "3" ? "choose": null}
+              bus={bus}
             />
           )}
           {availableLine.includes("5") && (
@@ -103,6 +107,7 @@ function Home() {
               line="5"
               data={line5}
               state={line == "5" ? "choose": null}
+              bus={bus}
             />
           )}
           {availableLine.includes("s") && (
@@ -110,6 +115,7 @@ function Home() {
               line="พิเศษ"
               data={lineSpecail}
               state={line == "s" ? "choose": null}
+              bus={bus}
             />
           )}
         
@@ -119,6 +125,7 @@ function Home() {
               line="1"
               data={line1}
               state="disable"
+              bus={bus}
             />
           )}
           {(!availableLine.includes("3")) && (
@@ -126,6 +133,7 @@ function Home() {
               line="3"
               data={line3}
               state="disable"
+              bus={bus}
             />
           )}
           {(!availableLine.includes("5")) && (
@@ -133,6 +141,7 @@ function Home() {
               line="5"
               data={line5}
               state="disable"
+              bus={bus}
             />
           )}
           {(!availableLine.includes("s")) && (
@@ -140,6 +149,7 @@ function Home() {
               line="พิเศษ"
               data={lineSpecail}
               state="disable"
+              bus={bus}
             />
           )}
         </div>
