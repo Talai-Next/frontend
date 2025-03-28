@@ -1,20 +1,27 @@
 "use client";
-import "./index.css";
-import LineCardInfo from "./components/LineCardInfo";
-import Header from "./components/Header";
+import "../index.css";
+import LineCardInfo from "../components/LineCardInfo";
 import { useState, useEffect } from "react";
-import "./index.css";
-import KasetsartMap from "./components/KasetsartMap";
-import api from "./api";
+import KasetsartMap from "../components/KasetsartMap";
+import api from "../api";
+import { RegisterBusStopPlugin } from "../plugins/BusStopMarkers";
+import { PluginProvider } from "../core/PluginManager";
+import { RegisterCrosswalkPlugin } from "../plugins/CrosswalkMarkers";
+import { RegisterSpeedBouncePlugin } from "../plugins/SpeedBounceMarker";
+import MarkerSetting from "../components/MarkerSetting";
+import { RegisterBusMarkerPlugin } from "@/plugins/BusMarker";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import SearchBar from "./components/SearchBar";
-import Search from "./components/Search";
-import useFetchData from "./hooks/FetchData";
-import useNearestStation from "./hooks/NearestStation"
-import useAvailableLine from "./hooks/AvailableLine";
-import useLineSuggestion from "./hooks/LineSuggestion";
+import SearchBar from "../components/SearchBar";
+import Search from "../components/Search";
+import useFetchData from "../hooks/FetchData";
+import useNearestStation from "../hooks/NearestStation"
+import useAvailableLine from "../hooks/AvailableLine";
+import useLineSuggestion from "../hooks/LineSuggestion";
 
 function Home() {
+  const [showBusstop, setShowBusstop] = useState(true);
+  const [showCrosswalk, setShowCrosswalk] = useState(false);
+  const [showSpeedBump, setShowSpeedBump] = useState(false);
   const [searchParams] = useSearchParams();
   const [isLoading, setIsLoading] = useState(true)
   const { stationData, line1, line3, line5, lineSpecail, loading} = useFetchData();  // Use custom hook
@@ -57,11 +64,13 @@ function Home() {
 
   // bus dummy data
   const bus = [{bus:1, cur:3},{bus:2,cur:4},{bus:3,cur:8}]
+  console.log("bus")
   
+
   return (
-      <div className='flex flex-col min-w-screen h-full overflow-hidden'>
-        <Header />
-        {destinationStation ? (
+
+    <div className='flex flex-col min-w-screen h-full overflow-hidden'>
+      {destinationStation ? (
           <div className='my-2 mx-5'>
             <Search 
               cur={currentStation ? currentStation : null}
@@ -76,15 +85,25 @@ function Home() {
           
         )
       }
-        <div>
-            <KasetsartMap />
+      <PluginProvider>
+        <RegisterBusStopPlugin isVisible={showBusstop} />
+        <RegisterCrosswalkPlugin isVisible={showCrosswalk} />
+        <RegisterSpeedBouncePlugin isVisible={showSpeedBump} />
+        <RegisterBusMarkerPlugin isVisible={true} />
+        <div className="">
+          <KasetsartMap />
         </div>
-        {loading ? (
+      </PluginProvider>
+
+
+      <div className="flex flex-col md:flex-row  w-full  p-5 gap-6">
+      
+      {loading ? (
           <div>
             Loading ...
           </div>
         ) : (
-          <div className='px-5 py-2'>
+          <div className='px-5 py-2 w-full md:w-[80vw]'>
           {/* Render available lines first */}
           {availableLine.includes("1") && (
             <LineCardInfo 
@@ -152,11 +171,18 @@ function Home() {
               bus={bus}
             />
           )}
+        </div>)}
+        <div className="w-full md:w-[400px]">
+          <MarkerSetting
+            showBusstop={showBusstop}
+            showCrosswalk={showCrosswalk}
+            showSpeedBump={showSpeedBump}
+            setShowBusstop={setShowBusstop}
+            setShowCrosswalk={setShowCrosswalk}
+            setShowSpeedBump={setShowSpeedBump}
+          />
         </div>
-        
-          
-        ) }
-        
+      </div>
     </div>
   );
 }

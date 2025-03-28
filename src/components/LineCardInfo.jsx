@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { GoAlertFill } from "react-icons/go";
 import { FaBusAlt } from "react-icons/fa";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
-
+import { TextField, Button } from "@mui/material";
 
 function LineCardInfo({data, line, state, bus}){
     // bus [json : {bus ,cur station}]
@@ -16,7 +16,7 @@ function LineCardInfo({data, line, state, bus}){
       };
     return(
         <div className="w-full max-w-full">
-            <Box >
+            <Box>
                 <Card className='shadow-none' elevation={0} >
                     <CardContent 
                         onClick={() => handleClick()}
@@ -63,7 +63,7 @@ function LineCardInfo({data, line, state, bus}){
                     </CardContent>
                 <div className={` mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-[3500px]" : "max-h-0"}`}>
                     {data.map((stop, index) => {
-                        const isBusHere = bus.some((b) => b.cur === stop.station.id);
+                        const isBusHere = Array.isArray(bus) && bus.some((b) => b.cur === stop.station.id);
                         return(
                         <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex h-36 items-center">
                             {/* Timeline Column */}
