@@ -20,7 +20,7 @@ function LineCardInfo({data, line, state, bus}){
                 <Card className='shadow-none' elevation={0} >
                     <CardContent 
                         onClick={() => handleClick()}
-                            className={`flex flex-col ${state == "choose" ? "bg-[#58bbff]" :"bg-[#B4D4C3]"} cursor-pointer rounded-3xl ${state == "choose" ? "hover:bg-[#428cf1]" :"hover:bg-[#9BC0AD]"} ${state == "disable" ? "opacity-30" : "opacity-100"}`}
+                            className={`flex flex-col cursor-pointer rounded-3xl ${state === "choose" ? "lineCardChoosed" : state === "disable" ? "lineCardDisable" : "lineCard"}`}
                     >
                         <div className='flex py-3 px-5 justify-between items-center'>
                             <div className='w-full'>
