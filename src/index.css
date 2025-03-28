@@ -5,3 +5,26 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
+.lineCard{
+  background-color: #B4D4C3;
+}
+.lineCard:hover{
+  background-color: #9BC0AD;
+}
+
+.lineCardDisable{
+  background-color: #B4D4C3;
+  opacity: 0.3;
+}
+.lineCardDisable:hover{
+  background-color: #9BC0AD;
+}
+
+.lineCardChoosed{
+  background-color: #58bbff;
+}
+.lineCardChoosed:hover{
+  background-color: #428cf1;
+}
+

@@ -10,48 +10,168 @@ import { RegisterCrosswalkPlugin } from "../plugins/CrosswalkMarkers";
 import { RegisterSpeedBouncePlugin } from "../plugins/SpeedBounceMarker";
 import MarkerSetting from "../components/MarkerSetting";
 import { RegisterBusMarkerPlugin } from "@/plugins/BusMarker";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
+import Search from "../components/Search";
+import useFetchData from "../hooks/FetchData";
+import useNearestStation from "../hooks/NearestStation"
+import useAvailableLine from "../hooks/AvailableLine";
+import useLineSuggestion from "../hooks/LineSuggestion";
 
 function Home() {
   const [showBusstop, setShowBusstop] = useState(true);
   const [showCrosswalk, setShowCrosswalk] = useState(false);
   const [showSpeedBump, setShowSpeedBump] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(true)
+  const { stationData, line1, line3, line5, lineSpecail, loading} = useFetchData();  // Use custom hook
+  const { availableLine } = useAvailableLine();
+  const [destinationStation, setDestinationStation] = useState({})
+  const [currentStation, setCurrentStation] = useState({})
+  const navigate = useNavigate();
+  const { nearestStation, fetchNearestStation } = useNearestStation();
+  const { line } = useLineSuggestion();
+  const nearStation = nearestStation;
 
-  const [line1, setLine1] = useState([]);
-  const [lineSpecail, setLineSpecail] = useState([]);
+  function retrieveCurrentStation(){
+    const curParams = searchParams.get('cur');
+    const currentId = curParams ? atob(curParams) : null;
+    const station = currentId ? stationData.find((station) => station.id == currentId) : null
+    setCurrentStation(station)
+  }
 
-  const fetchData = async () => {
-    try {
-      const response1 = await api.get("/api/line-one/");
-      const responseSpecial = await api.get("/api/line-special/");
-      setLine1(response1.data || []);
-      setLineSpecail(responseSpecial.data || []);
-    } catch (error) {
-      alert(error + " Failed to fetch data");
-    }
-  };
+  function retrieveDestinationStation(){
+    const desParams = searchParams.get('des');
+    const destinationId = desParams ? atob(desParams) : null;
+    const station = destinationId ? stationData.find((station) => station.id == destinationId) : null
+    setDestinationStation(station)
+  }
+
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    // auto find nearest station
+    if(!currentStation && nearStation.id){
+      {setCurrentStation(nearStation)}
+      const encodedId = btoa(nearStation.id)
+      navigate(`/?cur=${encodedId}`)
+    } 
+    else {
+      retrieveCurrentStation()
+    }
+    retrieveDestinationStation();
+    
+  }, [searchParams, stationData]);
+
+  // bus dummy data
+  const bus = [{bus:1, cur:3},{bus:2,cur:4},{bus:3,cur:8}]
+  console.log("bus")
+  
 
   return (
-    <div className="flex flex-col w-screen min-h-screen">
+
+    <div className='flex flex-col min-w-screen h-full overflow-hidden'>
+      {destinationStation ? (
+          <div className='my-2 mx-5'>
+            <Search 
+              cur={currentStation ? currentStation : null}
+              des={destinationStation ? destinationStation : null}/>
+          </div>
+        ) :(
+          <div className='my-2 mx-5'>
+            <SearchBar 
+              searchLable="ค้นหาที่นี่"
+              state="des"/>
+          </div>
+          
+        )
+      }
       <PluginProvider>
         <RegisterBusStopPlugin isVisible={showBusstop} />
         <RegisterCrosswalkPlugin isVisible={showCrosswalk} />
         <RegisterSpeedBouncePlugin isVisible={showSpeedBump} />
         <RegisterBusMarkerPlugin isVisible={true} />
-        <div className="h-[60vh]">
+        <div className="">
           <KasetsartMap />
         </div>
       </PluginProvider>
 
-      <div className="flex flex-col md:flex-row w-full p-5 gap-6">
-        <div className="flex-1 space-y-4 py-10">
-          <LineCardInfo line="1" data={line1} />
-          <LineCardInfo line="พิเศษ" data={lineSpecail} />
-        </div>
 
+      <div className="flex flex-col md:flex-row  w-full  p-5 gap-6">
+      
+      {loading ? (
+          <div>
+            Loading ...
+          </div>
+        ) : (
+          <div className='px-5 py-2 w-full md:w-[80vw]'>
+          {/* Render available lines first */}
+          {availableLine.includes("1") && (
+            <LineCardInfo 
+              line="1"
+              data={line1}
+              state={line == "1" ? "choose": null}
+              bus={bus}
+            />
+          )}
+          {availableLine.includes("3") && (
+            <LineCardInfo 
+              line="3"
+              data={line3}
+              state={line == "3" ? "choose": null}
+              bus={bus}
+            />
+          )}
+          {availableLine.includes("5") && (
+            <LineCardInfo 
+              line="5"
+              data={line5}
+              state={line == "5" ? "choose": null}
+              bus={bus}
+            />
+          )}
+          {availableLine.includes("s") && (
+            <LineCardInfo 
+              line="พิเศษ"
+              data={lineSpecail}
+              state={line == "s" ? "choose": null}
+              bus={bus}
+            />
+          )}
+        
+          {/* Render disabled lines */}
+          {(!availableLine.includes("1")) && (
+            <LineCardInfo 
+              line="1"
+              data={line1}
+              state="disable"
+              bus={bus}
+            />
+          )}
+          {(!availableLine.includes("3")) && (
+            <LineCardInfo 
+              line="3"
+              data={line3}
+              state="disable"
+              bus={bus}
+            />
+          )}
+          {(!availableLine.includes("5")) && (
+            <LineCardInfo 
+              line="5"
+              data={line5}
+              state="disable"
+              bus={bus}
+            />
+          )}
+          {(!availableLine.includes("s")) && (
+            <LineCardInfo 
+              line="พิเศษ"
+              data={lineSpecail}
+              state="disable"
+              bus={bus}
+            />
+          )}
+        </div>)}
         <div className="w-full md:w-[400px]">
           <MarkerSetting
             showBusstop={showBusstop}
