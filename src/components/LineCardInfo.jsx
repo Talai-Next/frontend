@@ -6,7 +6,7 @@ import { FaBusAlt } from "react-icons/fa";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { TextField, Button } from "@mui/material";
 
-function LineCardInfo({data, line, state, bus}){
+function LineCardInfo({data, line, state, bus, time}){
     // bus [json : {bus ,cur station}]
     const [isOpen, setIsOpen] = useState(false);
     const handleClick = () => {
@@ -63,8 +63,8 @@ function LineCardInfo({data, line, state, bus}){
                     </CardContent>
                 <div className={` mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-[3500px]" : "max-h-0"}`}>
                     {data.map((stop, index) => {
-                        const isBusHere = Array.isArray(bus) && bus.some((b) => b.cur === stop.station.id);
-                        return(
+                        const isBusHere = Array.isArray(bus) && bus.some((b) => b.station_id === stop.station.id);
+                        const foundTime = time?.time?.find((t) => t.station_id === stop.station.id);                        return(
                         <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex h-36 items-center">
                             {/* Timeline Column */}
                             <div className="flex flex-col flex-1 items-center w-[50px] h-full">
@@ -74,7 +74,7 @@ function LineCardInfo({data, line, state, bus}){
                                 {isBusHere ? (
                                     // show this one when there is bus with cur == station id 
                                     <div className="flex relative">
-                                        <div className="w-16 h-16 bg-[#428cf1] rounded-full animate-bounce flex items-center justify-center">
+                                        <div className="w-12 h-12 bg-[#428cf1] rounded-full animate-bounce flex items-center justify-center">
                                             <FaBusAlt 
                                                 color='white'
                                                 size={28}/>
@@ -99,7 +99,7 @@ function LineCardInfo({data, line, state, bus}){
                                     <h2>[{stop.station.station_code}] {stop.station.name}</h2>
                                 </div>
                                 <div>
-                                    <h2 className="text-[#19854B]">~3 นาที</h2>
+                                    <h2 className="text-[#19854B]">~{foundTime?.time ?? "N/A"}</h2>
                                 </div>
                             </div>
                         </CardContent>

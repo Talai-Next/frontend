@@ -17,7 +17,7 @@ import useFetchData from "../hooks/FetchData";
 import useNearestStation from "../hooks/NearestStation"
 import useAvailableLine from "../hooks/AvailableLine";
 import useLineSuggestion from "../hooks/LineSuggestion";
-
+import useBusDetail from "../hooks/BusDetail"
 function Home() {
   const [showBusstop, setShowBusstop] = useState(true);
   const [showCrosswalk, setShowCrosswalk] = useState(false);
@@ -31,6 +31,7 @@ function Home() {
   const navigate = useNavigate();
   const { nearestStation, fetchNearestStation } = useNearestStation();
   const { line } = useLineSuggestion();
+  const { bus1, bus3, bus5, busS, time1, time3, time5, timeS } = useBusDetail();
   const nearStation = nearestStation;
 
   function retrieveCurrentStation(){
@@ -47,7 +48,7 @@ function Home() {
     setDestinationStation(station)
   }
 
-
+  console.log(time1.time)
   useEffect(() => {
     // auto find nearest station
     if(!currentStation && nearStation.id){
@@ -63,8 +64,8 @@ function Home() {
   }, [searchParams, stationData]);
 
   // bus dummy data
-  const bus = [{bus:1, cur:3},{bus:2,cur:4},{bus:3,cur:8}]
-  console.log("bus")
+  // const bus = [{bus:1, cur:3},{bus:2,cur:4},{bus:3,cur:8}]
+  // console.log("bus")
   
 
   return (
@@ -110,7 +111,8 @@ function Home() {
               line="1"
               data={line1}
               state={line == "1" ? "choose": null}
-              bus={bus}
+              bus={bus1}
+              time={time1}
             />
           )}
           {availableLine.includes("3") && (
@@ -118,7 +120,8 @@ function Home() {
               line="3"
               data={line3}
               state={line == "3" ? "choose": null}
-              bus={bus}
+              bus={bus3}
+              time={time3}
             />
           )}
           {availableLine.includes("5") && (
@@ -126,7 +129,8 @@ function Home() {
               line="5"
               data={line5}
               state={line == "5" ? "choose": null}
-              bus={bus}
+              bus={bus5}
+              time={time5}
             />
           )}
           {availableLine.includes("s") && (
@@ -134,7 +138,8 @@ function Home() {
               line="พิเศษ"
               data={lineSpecail}
               state={line == "s" ? "choose": null}
-              bus={bus}
+              bus={busS}
+              time={timeS}
             />
           )}
         
@@ -144,7 +149,8 @@ function Home() {
               line="1"
               data={line1}
               state="disable"
-              bus={bus}
+              bus={bus1}
+              time={time1}
             />
           )}
           {(!availableLine.includes("3")) && (
@@ -152,7 +158,8 @@ function Home() {
               line="3"
               data={line3}
               state="disable"
-              bus={bus}
+              bus={bus3}
+              time={time3}
             />
           )}
           {(!availableLine.includes("5")) && (
@@ -160,7 +167,8 @@ function Home() {
               line="5"
               data={line5}
               state="disable"
-              bus={bus}
+              bus={bus5}
+              time={time5}
             />
           )}
           {(!availableLine.includes("s")) && (
@@ -168,7 +176,8 @@ function Home() {
               line="พิเศษ"
               data={lineSpecail}
               state="disable"
-              bus={bus}
+              bus={busS}
+              time={timeS}
             />
           )}
         </div>)}
