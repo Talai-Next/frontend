@@ -4,7 +4,7 @@ import L from "leaflet";
 import api from "@/api";
 import { usePlugins } from "../core/PluginManager";
 
-const API_URL = "/api/buses/";
+const API_URL = "/api/bus-data/";
 const MOVE_DURATION = 1500;
 
 const BusMarker = () => {
