@@ -74,7 +74,7 @@ const ReportPage = () => {
           </h2>
 
           <h2 className="text-lg text-gray-800">Select Your Bus Stop</h2>
-          <div className="mx-5">
+          <div className="mx-1">
             <BusStationSearch busStop={busStop} setBusStop={setBusStop} nearestStation={nearestStation} />
           </div>
 

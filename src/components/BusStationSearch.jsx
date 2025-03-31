@@ -47,7 +47,7 @@ export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between px-4 py-2 text-gray-800 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
+          className="w-full justify-between px-4 py-2 text-gray-800 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm transition-all hover:bg-gray-100 dark:hover:bg-gray-800 truncate"
         >
           {busStop
             ? allStations.find((station) => station.station_code === busStop)
