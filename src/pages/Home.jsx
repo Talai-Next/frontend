@@ -48,7 +48,6 @@ function Home() {
     setDestinationStation(station)
   }
 
-  console.log(time1.time)
   useEffect(() => {
     // auto find nearest station
     if(!currentStation && nearStation.id){

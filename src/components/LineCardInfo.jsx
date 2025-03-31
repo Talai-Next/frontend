@@ -5,10 +5,19 @@ import { GoAlertFill } from "react-icons/go";
 import { FaBusAlt } from "react-icons/fa";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { TextField, Button } from "@mui/material";
+import { useSearchParams } from "react-router-dom"; 
 
 function LineCardInfo({data, line, state, bus, time}){
     // bus [json : {bus ,cur station}]
     const [isOpen, setIsOpen] = useState(false);
+
+    // find current station
+    const [searchParams] = useSearchParams();
+    const encodedCur = searchParams.get('cur') || null;
+    const cur = encodedCur ? atob(encodedCur) : null;
+    const curArrivalTime = time?.time?.find((t) => t.station_id == cur)?.time ?? null;
+    console.log(curArrivalTime)
+    console.log(cur)
     const handleClick = () => {
         // Toggle visibility of the next CardContent
         console.log(`open card`);
@@ -49,9 +58,13 @@ function LineCardInfo({data, line, state, bus, time}){
                                         </div>
                                     </div>
                                     </div>
-                                ):
-                                    <p className='mt-2'>12 นาทีถึงที่ที่คุณอยู่</p>
-                                }
+                                ): curArrivalTime ? (
+                                    <p className="mt-2">{curArrivalTime} นาทีถึงที่ที่คุณอยู่</p>
+                                ) : (
+                                    <p className="mt-2">ไม่มีรถให้บริการ</p>
+                                )}
+                                    
+                                
                             </div>
                             <div>
                                 {isOpen ? (
