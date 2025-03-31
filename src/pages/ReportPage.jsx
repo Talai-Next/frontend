@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import SeatRating from "@/components/SeatRating";
 import { z } from "zod";
 import api from "@/api";
-import useNearestStation from "../hooks/NearestStation";
-import { useSearchParams, useNavigate } from "react-router-dom";
-import useFetchData from "../hooks/FetchData";
-import Search from "@/components/Search";
 import { BusStationSearch } from "@/components/BusStationSearch";
 
 const reportSchema = z.object({
   busStop: z.string().nonempty("Bus stop is required"),
-  //   busStop: z.string().optional(),
   rating: z.number().min(1).max(5, "Rating must be between 1 and 5"),
   comments: z
     .string()

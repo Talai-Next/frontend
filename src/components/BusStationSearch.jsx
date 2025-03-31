@@ -19,10 +19,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import useNearestStation from "@/hooks/NearestStation";
 
 export function BusStationSearch({ busStop, setBusStop }) {
   const [open, setOpen] = useState(false);
   const [allStations, setAllStations] = useState([]);
+  const { nearestStation, fetchNearestStation } = useNearestStation();
 
   useEffect(() => {
     async function fetchAllStations() {
@@ -47,8 +49,15 @@ export function BusStationSearch({ busStop, setBusStop }) {
         >
           {busStop
             ? allStations.find((station) => station.station_code === busStop)
-                ?.name
-            : "Select a bus stop..."}
+              ? `${busStop}: ${
+                  allStations.find(
+                    (station) => station.station_code === busStop
+                  )?.name
+                }`
+              : "Select a bus stop"
+            : nearestStation
+            ? `${nearestStation.station_code}: ${nearestStation.name}`
+            : "Select a bus stop"}
           <ChevronsUpDown className="opacity-50 h-4 w-4 ml-2" />
         </Button>
       </PopoverTrigger>
@@ -63,9 +72,9 @@ export function BusStationSearch({ busStop, setBusStop }) {
               {allStations.map((station) => (
                 <CommandItem
                   key={station.id}
-                  value={station.station_code}
-                  onSelect={(currentValue) => {
-                    setBusStop(currentValue === busStop ? "" : currentValue);
+                  value={`${station.station_code} ${station.name}`}
+                  onSelect={() => {
+                    setBusStop(station.station_code);
                     setOpen(false);
                   }}
                   className="flex items-center justify-between px-3 py-2 cursor-pointer transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -74,7 +83,9 @@ export function BusStationSearch({ busStop, setBusStop }) {
                   <Check
                     className={cn(
                       "h-4 w-4 text-blue-500 dark:text-blue-400 transition-opacity",
-                      busStop === station.station_code
+                      busStop === station.station_code ||
+                        (!busStop &&
+                          nearestStation?.station_code === station.station_code)
                         ? "opacity-100"
                         : "opacity-0"
                     )}
