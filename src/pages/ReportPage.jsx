@@ -6,14 +6,17 @@ import SeatRating from "@/components/SeatRating";
 import { z } from "zod";
 import api from "@/api";
 import { BusStationSearch } from "@/components/BusStationSearch";
+import { motion, AnimatePresence } from "framer-motion";
+import useNearestStation from "@/hooks/NearestStation";
+import { FaCommentMedical } from "react-icons/fa";
 
 const reportSchema = z.object({
   busStop: z.string().nonempty("Bus stop is required"),
   rating: z.number().min(1).max(5, "Rating must be between 1 and 5"),
   comments: z
     .string()
-    .max(500, "Comments must be less than 255 characters")
-    .optional(),
+    .min(1, "Comments must be at least 1 character long")
+    .max(255, "Comments must be less than 255 characters"),
 });
 
 const ReportPage = () => {
@@ -21,6 +24,8 @@ const ReportPage = () => {
   const [comments, setComments] = useState("");
   const [busStop, setBusStop] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const { nearestStation, fetchNearestStation } = useNearestStation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,9 +42,9 @@ const ReportPage = () => {
     }
 
     const formData = {
+      bus_stop: busStop,
       passenger_density: rating,
       comment: comments,
-      busStop: "bus stop",
     };
 
     try {
@@ -48,8 +53,10 @@ const ReportPage = () => {
       if (response.status !== 201) {
         throw new Error("Failed to submit the form");
       }
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
 
-      setBusStop("");
+      setBusStop(nearestStation?.station_code);
       setRating(0);
       setComments("");
       setError("");
@@ -68,7 +75,7 @@ const ReportPage = () => {
 
           <h2 className="text-lg text-gray-800">Select Your Bus Stop</h2>
           <div className="mx-5">
-            <BusStationSearch busStop={busStop} setBusStop={setBusStop} />
+            <BusStationSearch busStop={busStop} setBusStop={setBusStop} nearestStation={nearestStation} />
           </div>
 
           <div>
@@ -102,6 +109,22 @@ const ReportPage = () => {
           </div>
         </CardContent>
       </Card>
+
+      <AnimatePresence>
+        {success && (
+          <motion.div
+            className="fixed top-5 right-5 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+          >
+            <div className="flex items-center">
+              <FaCommentMedical className="mr-2 text-xl" />
+              <span>Feedback submitted successfully!</span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -19,24 +19,26 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import useNearestStation from "@/hooks/NearestStation";
 
-export function BusStationSearch({ busStop, setBusStop }) {
+export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
   const [open, setOpen] = useState(false);
   const [allStations, setAllStations] = useState([]);
-  const { nearestStation, fetchNearestStation } = useNearestStation();
 
   useEffect(() => {
     async function fetchAllStations() {
       try {
         const response = await api.get("/api/bus-stop-location/");
+        if (response.status !== 200) {
+          throw new Error("Failed to fetch all stations");
+        }
         setAllStations(response.data);
+        setBusStop(nearestStation?.station_code);
       } catch (error) {
-        console.error("Failed to fetch all stations:", error);
+        console.error("Failed to fetch all stations");
       }
     }
     fetchAllStations();
-  }, []);
+  }, [nearestStation]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
