@@ -17,7 +17,7 @@ export default function useLineSuggestion() {
         const fetchData = async () => {
           try {
             if (cur & des){
-                const response = await api.get(`/api/search/bus-route?cur=${cur}&des=${des}`);
+                const response = await api.get(`/api/search/bus-route/?cur=${cur}&des=${des}`);
                 setLine(response.data)
             }
           } catch (error) {
