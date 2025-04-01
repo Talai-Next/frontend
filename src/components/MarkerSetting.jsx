@@ -39,7 +39,7 @@ const MarkerSetting = ({
   ];
 
   return (
-    <div className="px-5 py-6 max-w-2xl mx-auto bg-white dark:bg-muted rounded-2xl shadow-xl inset-shadow-gray-600 mt-10 border border-border">
+    <div className="px-5 py-6 max-w-2xl mx-auto bg-white dark:bg-gray-500 rounded-2xl shadow-xl inset-shadow-gray-600 dark:border-white  mt-10 border border-border">
       <div className="space-y-2">
         <h2 className="text-2xl font-semibold text-foreground">
           Marker Setting
@@ -50,7 +50,7 @@ const MarkerSetting = ({
             ({ id, icon, title, description, checked, onChange }) => (
               <div
                 key={id}
-                className="flex items-center justify-between rounded-xl bg-muted/40 p-4 hover:bg-muted/60 transition-all shadow-lg hover:shadow-xl hover:bg-gray-100"
+                className="flex items-center justify-between rounded-xl bg-muted/40 dark:border-white dark:border-1 p-4 hover:bg-muted/60 dark:hover:bg-gray-400 transition-all shadow-lg hover:shadow-xl hover:bg-gray-100"
               >
                 <div className="flex items-center gap-4">
                   {icon}

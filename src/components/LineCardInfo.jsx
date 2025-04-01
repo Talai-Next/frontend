@@ -24,14 +24,14 @@ function LineCardInfo({data, line, state, bus, time}){
         setIsOpen(!isOpen);
       };
     return(
-        <div className="w-full max-w-full">
-            <Box>
-                <Card className='shadow-none' elevation={0} >
+        <div className="w-full max-w-full ">
+                <Card className='shadow-none  ' elevation={0} >
+                    <div className='dark:bg-[#2C2C2C]'>
                     <CardContent 
                         onClick={() => handleClick()}
                             className={`flex flex-col cursor-pointer rounded-3xl ${state === "choose" ? "lineCardChoosed" : state === "disable" ? "lineCardDisable" : "lineCard"}`}
                     >
-                        <div className='flex py-3 px-5 justify-between items-center'>
+                        <div className='flex py-3 px-5 justify-between items-center ' >
                             <div className='w-full'>
                                 <h2 className='font-semibold'>สาย {line}</h2>
                                 {state == "disable" ? (
@@ -74,11 +74,13 @@ function LineCardInfo({data, line, state, bus, time}){
                             </div>
                         </div>
                     </CardContent>
-                <div className={` mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-[3500px]" : "max-h-0"}`}>
+                    
+                <div className={`mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-[3500px]" : "max-h-0"}`}>
                     {data.map((stop, index) => {
                         const isBusHere = Array.isArray(bus) && bus.some((b) => b.station_id === stop.station.id);
-                        const foundTime = time?.time?.find((t) => t.station_id === stop.station.id);                        return(
-                        <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex h-36 items-center">
+                        const foundTime = time?.time?.find((t) => t.station_id === stop.station.id);                        
+                        return(
+                        <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex bg-transparent h-36 items-center ">
                             {/* Timeline Column */}
                             <div className="flex flex-col flex-1 items-center w-[50px] h-full">
                                 {/* Top Line */}
@@ -109,20 +111,19 @@ function LineCardInfo({data, line, state, bus, time}){
                             {/* Stop Details */}
                             <div className="flex px-5 h-full w-full justify-between items-center font-semibold">
                                 <div>
-                                    <h2>[{stop.station.station_code}] {stop.station.name}</h2>
+                                    <h2 className='dark:text-white'>[{stop.station.station_code}] {stop.station.name}</h2>
                                 </div>
                                 <div>
-                                    <h2 className="text-[#19854B]">~{foundTime?.time ?? "N/A"}</h2>
+                                    <h2 className="text-[#19854B] dark:text-white">~{foundTime?.time ?? "N/A"}</h2>
                                 </div>
                             </div>
                         </CardContent>
                         )
                     })}
                 </div>
-
+                </div>
                 </Card>
-                
-            </Box>
+
         </div>
     )
     

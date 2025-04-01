@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Select,
   SelectContent,
@@ -8,11 +7,20 @@ import {
 } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Button } from '@/components/ui/button';
+import { ThemeContext } from '@/ThemeProvider';
+import React, { useContext } from 'react';
+
+
 const SettingPage = () => {
+  const { theme, setTheme } = useContext(ThemeContext)
+  const isDark = theme === 'dark'
+  const toggleTheme = () => {
+    setTheme(isDark ? 'light' : 'dark');
+  };
   return (
     <div className="flex w-full h-screen bg-[radial-gradient(circle_at_top_left,#0096FF52,#FFDE6A42)] overflow-hidden justify-center">
-      
-      <div className='flex flex-col bg-white w-[25rem] h-[15rem] rounded-xl shadow-xl mt-24'>
+        
+      <div className='flex flex-col bg-white text-black w-[25rem] h-[15rem] rounded-xl shadow-xl mt-24'>
         <div className='my-10 mx-10'>
       ตั้งค่า
       <Select>
@@ -20,12 +28,12 @@ const SettingPage = () => {
           <SelectValue placeholder="เปลี่ยนภาษา" />
         </SelectTrigger>
         <SelectContent className="bg-white">
-          <SelectItem className="hover:bg-gray-100 "value="thai">ภาษาไทย</SelectItem>
-          <SelectItem className="hover:bg-gray-100" value="eng">ภาษาอังกฤษ</SelectItem>
+          <SelectItem className="hover:bg-gray-100 text-black "value="thai">ภาษาไทย</SelectItem>
+          <SelectItem className="hover:bg-gray-100 text-black" value="eng">ภาษาอังกฤษ</SelectItem>
         </SelectContent>
       </Select>
       <div className='flex mt-5 items-center'>
-        <Switch /> 
+      <Switch checked={isDark} onCheckedChange={toggleTheme} /> 
         <h3 className='px-3'>โหมดกลางคืน</h3>
       </div>
       <div className='flex mt-5 gap-3'>

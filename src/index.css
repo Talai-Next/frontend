@@ -5,20 +5,45 @@
 
 @custom-variant dark (&:is(.dark *));
 
+body {
+  @apply bg-white text-black transition-colors duration-300;
+}
+
+.dark body {
+  @apply bg-[#2C2C2C] text-white;
+}
+
+
+.leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
 
 .lineCard{
   background-color: #B4D4C3;
+
+}
+
+.dark .lineCard{
+  background-color: #a8dcd2;
+  
 }
 .lineCard:hover{
-  background-color: #9BC0AD;
+  background-color: #82c7ba;
 }
+
 
 .lineCardDisable{
   background-color: #B4D4C3;
   opacity: 0.3;
 }
+.dark .lineCardDisable{
+
+  background-color: #a8dcd2;
+  opacity: 0.3;
+  
+}
 .lineCardDisable:hover{
-  background-color: #9BC0AD;
+  background-color: #B4D4C3;
 }
 
 .lineCardChoosed{

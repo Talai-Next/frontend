@@ -97,7 +97,6 @@ function Home() {
 
 
       <div className="flex flex-col md:flex-row  w-full  p-5 gap-6">
-      
       {loading ? (
           <div className="text-center mt-32 px-5 py-2 w-full md:w-[80vw]">
              <div role="status">

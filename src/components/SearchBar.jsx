@@ -134,6 +134,8 @@ function SearchBar({ searchLable, value, state }) {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handleKeyPress}
+        className="dark:bg-gray-500 rounded-md"
+  
       />
       <Button
         // className="absolute -translate-x-15"
@@ -161,8 +163,8 @@ function SearchBar({ searchLable, value, state }) {
                   textAlign: "left",
                   width: "100%",
                   justifyContent: "flex-start",
-                  backgroundColor: focusedIndex === index ? "#d1d5db" : "white",
-                  '&:hover': { backgroundColor: "#d1d5db" }
+                  backgroundColor: focusedIndex === index ? "#d1d5db" : "transparent",
+                  '&:hover': { backgroundColor: "#d1d5db" }, 
                 }}
               >
                 {station.station_code}: {station.name}

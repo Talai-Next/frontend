@@ -66,7 +66,7 @@ const ReportPage = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-blue-200 to-green-100 flex justify-center items-center px-6">
+    <div className="w-full h-screen bg-[radial-gradient(circle_at_top_left,#0096FF52,#FFDE6A42)] flex justify-center items-center px-6">
       <Card className="w-full max-w-lg bg-white rounded-xl p-8 shadow-xl">
         <CardContent className="space-y-4">
           <h2 className="text-2xl font-bold text-gray-800 text-center">
