@@ -3,6 +3,7 @@ import { TextField, Button } from "@mui/material";
 import api from "../api";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 function SearchBar({ searchLable, value, state }) {
   const [isButtonOpen, setIsButtonOpen] = useState(true);
@@ -11,6 +12,7 @@ function SearchBar({ searchLable, value, state }) {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [allStations, setAllStations] = useState([]);
   const [cachedResults, setCachedResults] = useState({});
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
@@ -18,6 +20,7 @@ function SearchBar({ searchLable, value, state }) {
   const desId = searchParams.get('des') || '';
   const debounceTimeout = useRef(null);
   
+
   useEffect(() => {
     if (value) {
       setInput(value);
@@ -167,7 +170,7 @@ function SearchBar({ searchLable, value, state }) {
                   '&:hover': { backgroundColor: "#d1d5db" }, 
                 }}
               >
-                {station.station_code}: {station.name}
+                {station.station_code}: {i18n.language == 'th' ? station.name : station.name_eng}
               </Button>
             ))}
           </div>

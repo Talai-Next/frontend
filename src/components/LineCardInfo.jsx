@@ -6,11 +6,12 @@ import { FaBusAlt } from "react-icons/fa";
 import { MdKeyboardDoubleArrowDown } from "react-icons/md";
 import { TextField, Button } from "@mui/material";
 import { useSearchParams } from "react-router-dom"; 
+import { useTranslation } from "react-i18next";
 
 function LineCardInfo({data, line, state, bus, time}){
     // bus [json : {bus ,cur station}]
     const [isOpen, setIsOpen] = useState(false);
-
+    const { t, i18n } = useTranslation();
     // find current station
     const [searchParams] = useSearchParams();
     const encodedCur = searchParams.get('cur') || null;
@@ -33,23 +34,23 @@ function LineCardInfo({data, line, state, bus, time}){
                     >
                         <div className='flex py-3 px-5 justify-between items-center ' >
                             <div className='w-full'>
-                                <h2 className='font-semibold'>สาย {line}</h2>
+                                <h2 className='font-semibold'>{t('line')} {line}</h2>
                                 {state == "disable" ? (
                                     <div className='flex justify-between'>
-                                            <p className='mt-2 text-red-700'>สายนี้ไม่ผ่านป้ายทีอยู่ใกล้ที่สุดของคุณ</p>
+                                            <p className='mt-2 text-red-700'>{t('not_reach')}</p>
                                         <div className='px-5'>
                                             <GoAlertFill 
                                                 color='red'
                                                 size={30}/>
                                         </div>
                                     </div>
-                                ) : state == "choose" ? (
+                                ) : state == "choose" && curArrivalTime ? (
                                     <div>
                                         <div className='flex justify-between'>
-                                            <p className='mt-2'>12 นาทีถึงที่ที่คุณอยู่</p>
+                                            <p className='mt-2'>{curArrivalTime} {t("arrival_time")}</p>
                                         <div className='px-5'>
                                             <div className='flex'>
-                                            <p className='text-white font-bold text-2xl mr-2'>สายที่ต้องขึ้น</p>
+                                            <p className='text-white font-bold text-2xl mr-2'>{t('bus_route')}</p>
 
                                                 <MdDepartureBoard  
                                                     color='white'
@@ -59,9 +60,9 @@ function LineCardInfo({data, line, state, bus, time}){
                                     </div>
                                     </div>
                                 ): curArrivalTime ? (
-                                    <p className="mt-2">{curArrivalTime} นาทีถึงที่ที่คุณอยู่</p>
+                                    <p className="mt-2">{curArrivalTime} {t("arrival_time")}</p>
                                 ) : (
-                                    <p className="mt-2">ไม่มีรถให้บริการ</p>
+                                    <p className="mt-2">{t('not_available')}</p>
                                 )}
                                     
                                 
@@ -111,10 +112,10 @@ function LineCardInfo({data, line, state, bus, time}){
                             {/* Stop Details */}
                             <div className="flex px-5 h-full w-full justify-between items-center font-semibold">
                                 <div>
-                                    <h2 className='dark:text-white'>[{stop.station.station_code}] {stop.station.name}</h2>
+                                    <h2 className='dark:text-white'>[{stop.station.station_code}] {i18n.language == 'th' ? stop.station.name : stop.station.name_eng}</h2>
                                 </div>
                                 <div>
-                                    <h2 className="text-[#19854B] dark:text-white">~{foundTime?.time ?? "N/A"}</h2>
+                                    <h2 className="text-[#19854B] dark:text-white">~{foundTime?.time ?? "N/A"} {t('min')}</h2>
                                 </div>
                             </div>
                         </CardContent>

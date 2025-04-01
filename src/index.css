@@ -14,7 +14,7 @@ body {
 }
 
 
-.leaflet-container {
+.dark .leaflet-container {
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 

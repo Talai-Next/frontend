@@ -18,6 +18,7 @@ import useNearestStation from "../hooks/NearestStation"
 import useAvailableLine from "../hooks/AvailableLine";
 import useLineSuggestion from "../hooks/LineSuggestion";
 import useBusDetail from "../hooks/BusDetail"
+import { useTranslation } from "react-i18next";
 function Home() {
   const [showBusstop, setShowBusstop] = useState(true);
   const [showCrosswalk, setShowCrosswalk] = useState(false);
@@ -33,6 +34,7 @@ function Home() {
   const { line } = useLineSuggestion();
   const { bus1, bus3, bus5, busS, time1, time3, time5, timeS } = useBusDetail();
   const nearStation = nearestStation;
+  const { t, i18n } = useTranslation();
 
   function retrieveCurrentStation(){
     const curParams = searchParams.get('cur');
@@ -79,7 +81,7 @@ function Home() {
         ) :(
           <div className='my-2 mx-5'>
             <SearchBar 
-              searchLable="ค้นหาที่นี่"
+              searchLable={t('search')}
               state="des"/>
           </div>
           
@@ -144,7 +146,7 @@ function Home() {
           )}
           {availableLine.includes("s") && (
             <LineCardInfo 
-              line="พิเศษ"
+              line={t('special')}
               data={lineSpecail}
               state={line == "s" ? "choose": null}
               bus={busS}
@@ -182,7 +184,7 @@ function Home() {
           )}
           {(!availableLine.includes("s")) && (
             <LineCardInfo 
-              line="พิเศษ"
+              line={t('special')}
               data={lineSpecail}
               state="disable"
               bus={busS}

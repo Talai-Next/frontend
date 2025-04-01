@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const SeatRating = ({ rating, setRating }) => {
+  const { t, i18n } = useTranslation();
   const getRatingDescription = (rating) => {
     switch (rating) {
       case 1:
-        return "1: Very Low Density - Very few passengers.";
+        return t('rate_exp_des1');
       case 2:
-        return "2: Low Density - Few passengers.";
+        return t('rate_exp_des2');
       case 3:
-        return "3: Medium Density - Moderate number of passengers.";
+        return t('rate_exp_des3');
       case 4:
-        return "4: High Density - Quite crowded.";
+        return t('rate_exp_des4');
       case 5:
-        return "5: Very High Density - Extremely crowded with passengers.";
+        return t('rate_exp_des5');
       default:
-        return "Rate the bus density by selecting a star.";
+        return t('rate_exp_des');
     }
   };
 
