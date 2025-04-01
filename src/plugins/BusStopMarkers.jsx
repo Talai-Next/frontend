@@ -1,8 +1,9 @@
 import MarkerPlugin from "./MarkerPlugin";
 import { usePlugins } from "../core/PluginManager";
 import React, { useEffect } from "react";
+import api from "@/api";
 
-const BusStopMarker = () => {
+const BusStopMarker = ({ selectLine }) => {
   return (
     <MarkerPlugin
       apiUrl="/api/bus-stop-location/"
@@ -10,24 +11,25 @@ const BusStopMarker = () => {
       iconSize={[35, 35]}
       iconAnchor={[17, 30]}
       popupAnchor={[0, -32]}
+      selectLine={selectLine || undefined}
     />
   );
 };
 
 export default BusStopMarker;
 
-export const RegisterBusStopPlugin = ({ isVisible }) => {
+export const RegisterBusStopPlugin = ({ isVisible, selectLine }) => {
   const { registerPlugin, unregisterPlugin } = usePlugins();
 
   useEffect(() => {
     if (isVisible) {
-      registerPlugin({ name: "BusStopMarker", component: <BusStopMarker /> });
+      registerPlugin({ name: "BusStopMarker", component: <BusStopMarker selectLine={selectLine || undefined} /> });
     } else {
       unregisterPlugin("BusStopMarker");
     }
     
     return () => unregisterPlugin("BusStopMarker");
-  }, [isVisible]);
+  }, [isVisible, selectLine]);
 
   return null;
 };
