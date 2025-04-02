@@ -84,8 +84,8 @@ function LineCardInfo({ data, line, state, bus, time, setSelectLine }) {
             }`}
           >
             {data.map((stop, index) => {
-              const isBusHere = Array.isArray(bus) && bus.some((b) => b.station_id === stop.station.id);
-              const foundTime = time?.time?.find((t) => t.station_id === stop.station.id);
+              const isBusHere = Array.isArray(bus) && bus.some((b) => b.station_id == stop.station.id);
+              const foundTime = time?.time?.find((t) => t.station_id == stop.station.id);
               return (
                 <CardContent
                   key={index}
