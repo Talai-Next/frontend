@@ -168,18 +168,22 @@ function Home() {
               <LineCardInfo
                 line="1"
                 data={line1}
-                state="disable"
+                // state="disable"
+                state={line == "1" ? "choose" : null}
                 bus={bus1}
                 time={time1}
+                setSelectLine={setSelectLine}
               />
             )}
             {!availableLine.includes("3") && (
               <LineCardInfo
                 line="3"
                 data={line3}
-                state="disable"
+                // state="disable"
+                state={line == "3" ? "choose" : null}
                 bus={bus3}
                 time={time3}
+                setSelectLine={setSelectLine}
               />
             )}
             {!availableLine.includes("5") && (
@@ -195,9 +199,11 @@ function Home() {
               <LineCardInfo
                 line="พิเศษ"
                 data={lineSpecail}
-                state="disable"
+                // state="disable"
+                state={line == "s" ? "choose" : null}
                 bus={busS}
                 time={timeS}
+                setSelectLine={setSelectLine}
               />
             )}
           </div>

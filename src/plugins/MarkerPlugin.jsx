@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
-import { Marker, Popup } from "react-leaflet";
+import React, { useEffect, useState, useRef } from "react";
+import { Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
+import "leaflet-routing-machine";
 import api from "../api";
 
 const MarkerPlugin = ({
@@ -13,30 +14,23 @@ const MarkerPlugin = ({
 }) => {
   const [locations, setLocations] = useState([]);
   const [busLine, setBusLine] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const busLineRef = useRef(new Map());
+  const routingControlRef = useRef(null);
+  const map = useMap();
 
-  const unSelectMarkerIcon = useMemo(
-    () =>
-      new L.Icon({
-        iconUrl: iconUrl,
-        iconSize: iconSize,
-        iconAnchor: iconAnchor,
-        popupAnchor: popupAnchor,
-      }),
-    [iconUrl, iconSize, iconAnchor, popupAnchor]
-  );
+  const unSelectMarkerIcon = new L.Icon({
+    iconUrl,
+    iconSize,
+    iconAnchor,
+    popupAnchor,
+  });
 
-  const selectMarkerIcon = useMemo(
-    () =>
-      new L.Icon({
-        iconUrl: "https://cdn-icons-png.flaticon.com/128/3448/3448339.png",
-        iconSize: iconSize,
-        iconAnchor: iconAnchor,
-        popupAnchor: popupAnchor,
-      }),
-    [iconSize, iconAnchor, popupAnchor]
-  );
+  const selectMarkerIcon = new L.Icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/128/3448/3448339.png",
+    iconSize,
+    iconAnchor,
+    popupAnchor,
+  });
 
   useEffect(() => {
     api
@@ -48,36 +42,73 @@ const MarkerPlugin = ({
   useEffect(() => {
     if (!selectLine) {
       setBusLine([]);
+      if (routingControlRef.current) {
+        map.removeControl(routingControlRef.current);
+        routingControlRef.current = null;
+      }
       return;
     }
 
     if (busLineRef.current.has(selectLine)) {
       setBusLine(busLineRef.current.get(selectLine));
+      drawRoute(busLineRef.current.get(selectLine));
       return;
     }
 
-    setIsLoading(true);
+    const lineMap = {
+      1: "line-one",
+      3: "line-three",
+      5: "line-five",
+      พิเศษ: "line-special",
+    };
+
+    const endpoint = lineMap[selectLine];
+    if (!endpoint) return;
+
     api
-      .get(`/api/line-one/`)
+      .get(`/api/${endpoint}/`)
       .then((response) => {
         busLineRef.current.set(selectLine, response.data);
         setBusLine(response.data);
+        drawRoute(response.data);
       })
-      .catch(() => alert("Failed to fetch bus line data"))
-      .finally(() => setIsLoading(false));
-  }, [selectLine]);
+      .catch(() => alert("Failed to fetch bus line data"));
+  }, [selectLine, map]);
 
-  const busLineStationCodes = useMemo(() => {
-    return new Set(busLine.map((b) => b.station.station_code));
-  }, [busLine]);
+  const drawRoute = (routeData) => {
+    if (routingControlRef.current) {
+      map.removeControl(routingControlRef.current);
+    }
+
+    if (routeData.length > 1) {
+      const waypoints = routeData.map((point) =>
+        L.latLng(point.station.latitude, point.station.longitude)
+      );
+
+      routingControlRef.current = L.Routing.control({
+        waypoints,
+        routeWhileDragging: true,
+        createMarker: () => null,
+        lineOptions: {
+          styles: [{ color: "green", weight: 5 }],
+        },
+        show: false,
+        addWaypoints: false,
+        fitSelectedRoutes: true,
+        collapsible: false,
+        containerClassName: "hidden",
+      }).addTo(map);
+
+      map.fitBounds(L.latLngBounds(waypoints));
+    }
+  };
 
   return (
     <>
       {locations.map((location, index) => {
-        const isSelected =
-          busLineStationCodes.size > 0 &&
-          busLineStationCodes.has(location.station_code);
-
+        const isSelected = busLine.some(
+          (b) => b.station.station_code === location.station_code
+        );
         return (
           <Marker
             key={index}
@@ -93,8 +124,6 @@ const MarkerPlugin = ({
           </Marker>
         );
       })}
-
-      {isLoading && <div className="loading">Loading new markers...</div>}
     </>
   );
 };

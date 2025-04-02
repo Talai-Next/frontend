@@ -23,7 +23,6 @@ function LineCardInfo({ data, line, state, bus, time, setSelectLine }) {
     time?.time?.find((t) => t.station_id == cur)?.time ?? null;
 
   const handleClick = () => {
-    console.log("isOpen", isOpen);
     setSelectLine((prev) => (isOpen ? undefined : line));
     setIsOpen(!isOpen);
   };

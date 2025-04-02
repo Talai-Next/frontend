@@ -1,7 +1,6 @@
 import MarkerPlugin from "./MarkerPlugin";
 import { usePlugins } from "../core/PluginManager";
 import React, { useEffect } from "react";
-import api from "@/api";
 
 const BusStopMarker = ({ selectLine }) => {
   return (
