@@ -78,8 +78,8 @@ function LineCardInfo({data, line, state, bus, time}){
                     
                 <div className={`mt-2 px-5 transition-all duration-500 ease-in-out ${isOpen ? "max-h-[3500px]" : "max-h-0"}`}>
                     {data.map((stop, index) => {
-                        const isBusHere = Array.isArray(bus) && bus.some((b) => b.station_id === stop.station.id);
-                        const foundTime = time?.time?.find((t) => t.station_id === stop.station.id);                        
+                        const isBusHere = Array.isArray(bus) && bus.some((b) => b.station_id == stop.station.id);
+                        const foundTime = time?.time?.find((t) => t.station_id == stop.station.id);                        
                         return(
                         <CardContent sx={{ mt: 0, padding: "0 !important" }} className="flex bg-transparent h-36 items-center ">
                             {/* Timeline Column */}
@@ -115,7 +115,7 @@ function LineCardInfo({data, line, state, bus, time}){
                                     <h2 className='dark:text-white'>[{stop.station.station_code}] {i18n.language == 'th' ? stop.station.name : stop.station.name_eng}</h2>
                                 </div>
                                 <div>
-                                    <h2 className="text-[#19854B] dark:text-white">~{foundTime?.time ?? "N/A"} {t('min')}</h2>
+                                    <h2 className="text-[#19854B] dark:text-white">~{foundTime?.time ?? "N/A"} {t('minute')}</h2>
                                 </div>
                             </div>
                         </CardContent>

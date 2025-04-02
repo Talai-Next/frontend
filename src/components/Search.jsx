@@ -19,7 +19,7 @@ function Search({des, cur}){
                 </div>
                 <SearchBar 
                     searchLable={t('des_location')}
-                    value={des ? (i18n.language === 'th' ? cur.name : des.name_eng) : null}
+                    value={des ? (i18n.language === 'th' ? des.name : des.name_eng) : null}
 
                     state="des"/>
             </div>
