@@ -19,10 +19,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useTranslation } from "react-i18next";
 
 export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
   const [open, setOpen] = useState(false);
   const [allStations, setAllStations] = useState([]);
+  const { t, i18n } = useTranslation(); 
 
   useEffect(() => {
     async function fetchAllStations() {
@@ -58,7 +60,7 @@ export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
                 }`
               : "Select a bus stop"
             : nearestStation
-            ? `${nearestStation.station_code}: ${nearestStation.name}`
+            ? `${nearestStation.station_code}: ${i18n.language == 'th' ? nearestStation.name : nearestStation.name_eng}`
             : "Select a bus stop"}
           <ChevronsUpDown className="opacity-50 h-4 w-4 ml-2" />
         </Button>
@@ -74,14 +76,14 @@ export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
               {allStations.map((station) => (
                 <CommandItem
                   key={station.id}
-                  value={`${station.station_code} ${station.name}`}
+                  value={`${station.station_code} ${i18n.language == 'th' ? station.name : station.name_eng}`}
                   onSelect={() => {
                     setBusStop(station.station_code);
                     setOpen(false);
                   }}
                   className="flex items-center justify-between px-3 py-2 cursor-pointer transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
-                  {station.station_code}: {station.name}
+                  {station.station_code}: ${i18n.language == 'th' ? station.name : station.name_eng}{i18n.language == 'th' ? station.name : station.name_eng}
                   <Check
                     className={cn(
                       "h-4 w-4 text-blue-500 dark:text-blue-400 transition-opacity",

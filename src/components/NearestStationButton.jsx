@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import { MdMyLocation } from "react-icons/md";
 import useNearestStation from "../hooks/NearestStation";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
+import { useTranslation } from "react-i18next";
 
 function NearestStationButton(){
     const { nearestStation, fetchNearesStation } = useNearestStation();
@@ -9,7 +10,7 @@ function NearestStationButton(){
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
-    
+    const { t, i18n } = useTranslation();
     // retrive old route
     const curId = searchParams.get('cur') || '';
     const desId = searchParams.get('des') || '';
@@ -31,7 +32,7 @@ function NearestStationButton(){
                     onClick={() => handleClick()}   
                     sx={{height: "55px", width: "180px"}}>
                     <MdMyLocation />
-                    <p className="ml-2 text-xl">สถานีใกล้ฉัน</p>
+                    <p className="ml-2 text-xl">{t('nearby_station')}</p>
                 </Button>
             </div>
     )

@@ -15,13 +15,13 @@ const navbarItem = [
 function Header() {
   return (
     <div className="flex flex-col w-screen">
-      <div className="w-full px-4 py-3 bg-white shadow-md flex justify-center items-center">
+      <div className="w-full px-4 py-3  shadow-md flex justify-center items-center">
         <h2 className="font-bold text-xl">Talai NEXT</h2>
       </div>
 
       <div className="my-3 mx-[5px] flex justify-between">
         {navbarItem.map((item, index) => (
-            <a key={index} href={item.path} className="flex w-[30%] flex-col items-center text-gray-600 hover:text-blue-500 cursor-pointer">
+            <a key={index} href={item.path} className="flex w-[30%] flex-col items-center text-gray-600 dark:text-white dark:hover:text-blue-500 hover:text-blue-500 cursor-pointer">
                 {item.icon}
                 <span className="text-sm mt-1">{item.name}</span>
             </a>

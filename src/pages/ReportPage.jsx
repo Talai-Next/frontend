@@ -9,6 +9,7 @@ import { BusStationSearch } from "@/components/BusStationSearch";
 import { motion, AnimatePresence } from "framer-motion";
 import useNearestStation from "@/hooks/NearestStation";
 import { FaCommentMedical } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const reportSchema = z.object({
   busStop: z.string().nonempty("Bus stop is required"),
@@ -26,6 +27,7 @@ const ReportPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const { nearestStation, fetchNearestStation } = useNearestStation();
+  const { t, i18n } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,30 +68,30 @@ const ReportPage = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-gradient-to-br from-blue-200 to-green-100 flex justify-center items-center px-6">
+    <div className="w-full h-screen bg-[radial-gradient(circle_at_top_left,#0096FF52,#FFDE6A42)] flex justify-center items-center px-6">
       <Card className="w-full max-w-lg bg-white rounded-xl p-8 shadow-xl">
         <CardContent className="space-y-4">
           <h2 className="text-2xl font-bold text-gray-800 text-center">
-            Rate Your Bus Stop Experience
+            {t('report_label')}
           </h2>
 
-          <h2 className="text-lg text-gray-800">Select Your Bus Stop</h2>
+          <h2 className="text-lg text-gray-800">{t('select_bus_stop')}</h2>
           <div className="mx-1">
             <BusStationSearch busStop={busStop} setBusStop={setBusStop} nearestStation={nearestStation} />
           </div>
 
           <div>
-            <h2 className="text-lg text-gray-800">Rate Your Experience</h2>
+            <h2 className="text-lg text-gray-800">{t('rate_exp')}</h2>
             <SeatRating rating={rating} setRating={setRating} />
           </div>
 
           <div>
-            <h2 className="text-lg text-gray-800">Additional Comments</h2>
+            <h2 className="text-lg text-gray-800">{t('comment')}</h2>
             <Textarea
               value={comments}
               onChange={(e) => setComments(e.target.value)}
               className="mt-1 p-3 rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-400"
-              placeholder="Add your comments..."
+              placeholder={t('comment_des')}
             />
           </div>
 
@@ -104,7 +106,7 @@ const ReportPage = () => {
               className="bg-[#0096FF] text-white px-6 py-2 rounded-lg transition-all hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
               onClick={handleSubmit}
             >
-              SUBMIT
+              {t('submit')}
             </Button>
           </div>
         </CardContent>
@@ -120,7 +122,7 @@ const ReportPage = () => {
           >
             <div className="flex items-center">
               <FaCommentMedical className="mr-2 text-xl" />
-              <span>Feedback submitted successfully!</span>
+              <span>{t('feedback_success')}</span>
             </div>
           </motion.div>
         )}

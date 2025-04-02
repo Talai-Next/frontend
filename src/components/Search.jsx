@@ -4,22 +4,23 @@ import { useGeolocated } from "react-geolocated";
 import api from "../api";
 import NearestStationButton from "./NearestStationButton";
 import SwapButton from "./SwapButton";
+import { useTranslation } from "react-i18next";
 
 function Search({des, cur}){
-    
-   
+    const { t, i18n } = useTranslation();
     return(
         <div className="flex">
             <div className="flex flex-col w-[90%]">
                 <div className="mb-5">
                     <SearchBar 
-                        searchLable="ตำแหน่งของคุณ"
-                        value={cur ? cur.name : null}
+                        searchLable={t('cur_location')}
+                        value={cur ? (i18n.language === 'th' ? cur.name : cur.name_eng) : null}
                         state="cur"/>
                 </div>
                 <SearchBar 
-                    searchLable="กำลังนำทางไป"
-                    value={des ? des.name : null }
+                    searchLable={t('des_location')}
+                    value={des ? (i18n.language === 'th' ? des.name : des.name_eng) : null}
+
                     state="des"/>
             </div>
             <div className="flex flex-col mx-5">

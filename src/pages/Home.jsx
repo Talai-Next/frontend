@@ -17,7 +17,11 @@ import useFetchData from "../hooks/FetchData";
 import useNearestStation from "../hooks/NearestStation";
 import useAvailableLine from "../hooks/AvailableLine";
 import useLineSuggestion from "../hooks/LineSuggestion";
-import useBusDetail from "../hooks/BusDetail";
+
+import useBusDetail from "../hooks/BusDetail"
+import { useTranslation } from "react-i18next";
+
+
 function Home() {
   const [showBusstop, setShowBusstop] = useState(true);
   const [showCrosswalk, setShowCrosswalk] = useState(false);
@@ -34,8 +38,10 @@ function Home() {
   const { line } = useLineSuggestion();
   const { bus1, bus3, bus5, busS, time1, time3, time5, timeS } = useBusDetail();
   const nearStation = nearestStation;
+  const { t, i18n } = useTranslation();
   const [selectLine, setSelectLine] = useState(null);
   const [selectedStation, setSelectedStation] = useState(null);
+
 
   function retrieveCurrentStation() {
     const curParams = searchParams.get("cur");
@@ -72,17 +78,20 @@ function Home() {
   return (
     <div className="flex flex-col min-w-screen h-full overflow-hidden">
       {destinationStation ? (
-        <div className="my-2 mx-5">
-          <Search
-            cur={currentStation ? currentStation : null}
-            des={destinationStation ? destinationStation : null}
-          />
-        </div>
-      ) : (
-        <div className="my-2 mx-5">
-          <SearchBar searchLable="ค้นหาที่นี่" state="des" />
-        </div>
-      )}
+          <div className='my-2 mx-5'>
+            <Search 
+              cur={currentStation ? currentStation : null}
+              des={destinationStation ? destinationStation : null}/>
+          </div>
+        ) :(
+          <div className='my-2 mx-5'>
+            <SearchBar 
+              searchLable={t('search')}
+              state="des"/>
+          </div>
+          
+        )
+      }
       <PluginProvider>
         <RegisterBusStopPlugin isVisible={showBusstop} selectLine={selectLine} />
         <RegisterCrosswalkPlugin isVisible={showCrosswalk} />
@@ -95,6 +104,7 @@ function Home() {
 
       <div className="flex flex-col md:flex-row  w-full  p-5 gap-6">
         {loading ? (
+
           <div className="text-center mt-32 px-5 py-2 w-full md:w-[80vw]">
             <div role="status">
               <svg
@@ -117,6 +127,84 @@ function Home() {
             </div>
           </div>
         ) : (
+
+          <div className='px-5 py-2 w-full md:w-[80vw]'>
+          {/* Render available lines first */}
+          {availableLine.includes("1") && (
+            <LineCardInfo 
+              line="1"
+              data={line1}
+              state={line == "1" ? "choose": null}
+              bus={bus1}
+              time={time1}
+            />
+          )}
+          {availableLine.includes("3") && (
+            <LineCardInfo 
+              line="3"
+              data={line3}
+              state={line == "3" ? "choose": null}
+              bus={bus3}
+              time={time3}
+            />
+          )}
+          {availableLine.includes("5") && (
+            <LineCardInfo 
+              line="5"
+              data={line5}
+              state={line == "5" ? "choose": null}
+              bus={bus5}
+              time={time5}
+            />
+          )}
+          {availableLine.includes("s") && (
+            <LineCardInfo 
+              line={t('special')}
+              data={lineSpecail}
+              state={line == "s" ? "choose": null}
+              bus={busS}
+              time={timeS}
+            />
+          )}
+        
+          {/* Render disabled lines */}
+          {(!availableLine.includes("1")) && (
+            <LineCardInfo 
+              line="1"
+              data={line1}
+              state="disable"
+              bus={bus1}
+              time={time1}
+            />
+          )}
+          {(!availableLine.includes("3")) && (
+            <LineCardInfo 
+              line="3"
+              data={line3}
+              state="disable"
+              bus={bus3}
+              time={time3}
+            />
+          )}
+          {(!availableLine.includes("5")) && (
+            <LineCardInfo 
+              line="5"
+              data={line5}
+              state="disable"
+              bus={bus5}
+              time={time5}
+            />
+          )}
+          {(!availableLine.includes("s")) && (
+            <LineCardInfo 
+              line={t('special')}
+              data={lineSpecail}
+              state="disable"
+              bus={busS}
+              time={timeS}
+            />
+          )}
+        </div>)}
           <div className="px-5 py-2 w-full md:w-[80vw]">
             {/* Render avaxlable lines first */}
             {availableLine.includes("1") && (
@@ -202,6 +290,7 @@ function Home() {
             )}
           </div>
         )}
+
         <div className="w-full md:w-[400px]">
           <MarkerSetting
             showBusstop={showBusstop}
