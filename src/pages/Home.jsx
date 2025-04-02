@@ -35,6 +35,7 @@ function Home() {
   const { bus1, bus3, bus5, busS, time1, time3, time5, timeS } = useBusDetail();
   const nearStation = nearestStation;
   const [selectLine, setSelectLine] = useState(null);
+  const [selectedStation, setSelectedStation] = useState(null);
 
   function retrieveCurrentStation() {
     const curParams = searchParams.get("cur");
@@ -67,10 +68,6 @@ function Home() {
     }
     retrieveDestinationStation();
   }, [searchParams, stationData]);
-
-  // bus dummy data
-  // const bus = [{bus:1, cur:3},{bus:2,cur:4},{bus:3,cur:8}]
-  // console.log("bus")
 
   return (
     <div className="flex flex-col min-w-screen h-full overflow-hidden">
@@ -168,8 +165,7 @@ function Home() {
               <LineCardInfo
                 line="1"
                 data={line1}
-                // state="disable"
-                state={line == "1" ? "choose" : null}
+                state="disable"
                 bus={bus1}
                 time={time1}
                 setSelectLine={setSelectLine}
@@ -179,8 +175,7 @@ function Home() {
               <LineCardInfo
                 line="3"
                 data={line3}
-                // state="disable"
-                state={line == "3" ? "choose" : null}
+                state="disable"
                 bus={bus3}
                 time={time3}
                 setSelectLine={setSelectLine}
@@ -199,8 +194,7 @@ function Home() {
               <LineCardInfo
                 line="พิเศษ"
                 data={lineSpecail}
-                // state="disable"
-                state={line == "s" ? "choose" : null}
+                state="disable"
                 bus={busS}
                 time={timeS}
                 setSelectLine={setSelectLine}

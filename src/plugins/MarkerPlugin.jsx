@@ -3,6 +3,7 @@ import { Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet-routing-machine";
 import api from "../api";
+import { useLocation } from "react-router-dom";
 
 const MarkerPlugin = ({
   apiUrl,
@@ -18,6 +19,17 @@ const MarkerPlugin = ({
   const routingControlRef = useRef(null);
   const map = useMap();
 
+  const location = useLocation();
+
+  const [curId, setCurId] = useState(null);
+  const [desId, setDesId] = useState(null);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    setCurId(searchParams.get("cur") ? atob(searchParams.get("cur")) : null);
+    setDesId(searchParams.get("des") ? atob(searchParams.get("des")) : null);
+  }, [location.search]);
+
   const unSelectMarkerIcon = new L.Icon({
     iconUrl,
     iconSize,
@@ -26,8 +38,15 @@ const MarkerPlugin = ({
   });
 
   const selectMarkerIcon = new L.Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/128/3448/3448339.png",
+    iconUrl: "/marker/green-bus-stop.png",
     iconSize,
+    iconAnchor,
+    popupAnchor,
+  });
+
+  const busSearchMarkerIcon = new L.Icon({
+    iconUrl: "/marker/red-bus-stop.png",
+    iconSize: [iconSize[0] + 10, iconSize[1] + 10],
     iconAnchor,
     popupAnchor,
   });
@@ -106,14 +125,18 @@ const MarkerPlugin = ({
   return (
     <>
       {locations.map((location, index) => {
-        const isSelected = busLine.some(
-          (b) => b.station.station_code === location.station_code
-        );
+        const isSelected =
+          busLine.some(
+            (b) => b.station.station_code === location.station_code
+          )
+        const isSearch = 
+          location.id == curId || location.id == desId;
         return (
           <Marker
             key={index}
             position={[location.latitude, location.longitude]}
-            icon={isSelected ? selectMarkerIcon : unSelectMarkerIcon}
+            icon={isSearch ? busSearchMarkerIcon : isSelected ? selectMarkerIcon : unSelectMarkerIcon}
+            // icon={isSelected ? selectMarkerIcon : unSelectMarkerIcon}
           >
             <Popup>
               <h5>[{location.station_code}]</h5>
