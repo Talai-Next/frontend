@@ -83,7 +83,7 @@ export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
                   }}
                   className="flex items-center justify-between px-3 py-2 cursor-pointer transition-all hover:bg-gray-100 dark:hover:bg-gray-800"
                 >
-                  {station.station_code}: ${i18n.language == 'th' ? station.name : station.name_eng}{i18n.language == 'th' ? station.name : station.name_eng}
+                  {station.station_code}: {i18n.language == 'th' ? station.name : station.name_eng}{i18n.language == 'th' ? station.name : station.name_eng}
                   <Check
                     className={cn(
                       "h-4 w-4 text-blue-500 dark:text-blue-400 transition-opacity",
