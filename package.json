@@ -30,6 +30,7 @@
     "i18next-xhr-backend": "^3.2.2",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
+    "leaflet-routing-machine": "^3.2.12",
     "lucide-react": "^0.479.0",
     "postcss-cli": "^11.0.0",
     "react": "^19.0.0",
