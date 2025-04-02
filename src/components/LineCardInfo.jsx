@@ -30,6 +30,7 @@ function LineCardInfo({ data, line, state, bus, time, setSelectLine }) {
     <div className="w-full max-w-full">
       <Box>
         <Card className="shadow-none" elevation={0}>
+        <div className='dark:bg-[#2C2C2C]'>
           <CardContent
             onClick={handleClick}
             className={`flex flex-col cursor-pointer rounded-3xl ${
@@ -120,7 +121,9 @@ function LineCardInfo({ data, line, state, bus, time, setSelectLine }) {
               );
             })}
           </div>
+          </div>
         </Card>
+        
       </Box>
     </div>
   );
