@@ -12,7 +12,7 @@ function SearchBar({ searchLable, value, state }) {
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [allStations, setAllStations] = useState([]);
   const [cachedResults, setCachedResults] = useState({});
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
