@@ -46,7 +46,7 @@ jobs:
           rm -f package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm i
 
       - name: Install missing Rollup binary (Linux)
         run: npm install @rollup/rollup-linux-x64-gnu || true  # The "|| true" ensures it won't fail the build if the binary isn't found
