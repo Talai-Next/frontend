@@ -1,4 +1,4 @@
-import { Box, Card, CardActions, CardContent } from "@mui/material";
+import { Box, Card, CardContent } from "@mui/material";
 import {
   MdKeyboardArrowDown,
   MdKeyboardArrowRight,
@@ -22,7 +22,7 @@ function LineCardInfo({ data, line, state, bus, time, setSelectLine }) {
   const curArrivalTime = time?.time?.find((t) => t.station_id == cur)?.time ?? null;
 
   const handleClick = () => {
-    setSelectLine((prev) => (isOpen ? undefined : line));
+    setSelectLine(() => (isOpen ? undefined : line));
     setIsOpen(!isOpen);
   };
 

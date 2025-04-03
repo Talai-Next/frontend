@@ -4,11 +4,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Button } from '@/components/ui/button';
-import { ThemeContext } from '@/ThemeProvider';
-import React, { useContext, useEffect } from 'react';
+} from "../components/ui/select"
+import { Switch } from "../components/ui/switch"
+import { ThemeContext } from '../ThemeProvider';
+import { useContext } from 'react';
 import { useTranslation } from "react-i18next";
 
 const SettingPage = () => {

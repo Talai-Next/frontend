@@ -3,13 +3,12 @@ import "../index.css";
 import LineCardInfo from "../components/LineCardInfo";
 import { useState, useEffect } from "react";
 import KasetsartMap from "../components/KasetsartMap";
-import api from "../api";
 import { RegisterBusStopPlugin } from "../plugins/BusStopMarkers";
 import { PluginProvider } from "../core/PluginManager";
 import { RegisterCrosswalkPlugin } from "../plugins/CrosswalkMarkers";
 import { RegisterSpeedBouncePlugin } from "../plugins/SpeedBounceMarker";
 import MarkerSetting from "../components/MarkerSetting";
-import { RegisterBusMarkerPlugin } from "@/plugins/BusMarker";
+import { RegisterBusMarkerPlugin } from "../plugins/BusMarker";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 import Search from "../components/Search";
@@ -27,20 +26,18 @@ function Home() {
   const [showCrosswalk, setShowCrosswalk] = useState(false);
   const [showSpeedBump, setShowSpeedBump] = useState(false);
   const [searchParams] = useSearchParams();
-  const [isLoading, setIsLoading] = useState(true);
   const { stationData, line1, line3, line5, lineSpecail, loading } =
     useFetchData(); // Use custom hook
   const { availableLine } = useAvailableLine();
   const [destinationStation, setDestinationStation] = useState({});
   const [currentStation, setCurrentStation] = useState({});
   const navigate = useNavigate();
-  const { nearestStation, fetchNearestStation } = useNearestStation();
+  const { nearestStation } = useNearestStation();
   const { line } = useLineSuggestion();
   const { bus1, bus3, bus5, busS, time1, time3, time5, timeS } = useBusDetail();
   const nearStation = nearestStation;
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [selectLine, setSelectLine] = useState(null);
-  const [selectedStation, setSelectedStation] = useState(null);
 
   function retrieveCurrentStation() {
     const curParams = searchParams.get("cur");

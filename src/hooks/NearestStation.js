@@ -1,7 +1,7 @@
 import api from "../api";
 import { useState, useEffect, useCallback } from "react";
 import { useGeolocated } from "react-geolocated";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
+import { useSearchParams } from "react-router-dom"; 
 
 export default function useNearestStation() {
     const [searchParams] = useSearchParams();

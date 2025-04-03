@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
 const SeatRating = ({ rating, setRating }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const getRatingDescription = (rating) => {
     switch (rating) {
       case 1:

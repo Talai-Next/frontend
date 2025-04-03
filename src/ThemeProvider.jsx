@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 
 function getInitialTheme() {
   if (typeof window !== 'undefined' && window.localStorage) {

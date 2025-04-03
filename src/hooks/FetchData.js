@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api";
-import { useSearchParams, useNavigate } from "react-router-dom";
 
 function useFetchData() {
-  const [searchParams] = useSearchParams();
   const [stationData, setStationData] = useState([]);
   const [line1, setLine1] = useState([]);
   const [line3, setLine3] = useState([]);

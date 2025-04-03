@@ -1,6 +1,6 @@
 import MarkerPlugin from "./MarkerPlugin";
 import { usePlugins } from "../core/PluginManager";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const SpeedBounceMarker = () => {
   return (

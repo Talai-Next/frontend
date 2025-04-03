@@ -1,11 +1,8 @@
 import { Button } from "@mui/material";
-import useNearestStation from "../hooks/NearestStation";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
 import { IoSwapVertical } from "react-icons/io5";
 
 function SwapButton(){
-    const { nearestStation, fetchNearesStation } = useNearestStation();
-    const nearStation = nearestStation;
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();

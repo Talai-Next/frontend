@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import api from "@/api";
 
@@ -24,7 +24,7 @@ import { useTranslation } from "react-i18next";
 export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
   const [open, setOpen] = useState(false);
   const [allStations, setAllStations] = useState([]);
-  const { t, i18n } = useTranslation(); 
+  const { i18n } = useTranslation(); 
 
   useEffect(() => {
     async function fetchAllStations() {
@@ -36,7 +36,7 @@ export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
         setAllStations(response.data);
         setBusStop(nearestStation?.station_code);
       } catch (error) {
-        console.error("Failed to fetch all stations");
+        console.error(`Failed to fetch all stations : ${error}`);
       }
     }
     fetchAllStations();
