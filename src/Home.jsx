@@ -3,66 +3,158 @@ import "./index.css";
 import LineCardInfo from "./components/LineCardInfo";
 import Header from "./components/Header";
 import { useState, useEffect } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import { LiaHomeSolid } from "react-icons/lia";
-import { TbReportAnalytics } from "react-icons/tb";
-import { IoColorFillOutline } from "react-icons/io5";
 import "./index.css";
-import TextField from "@mui/material/TextField";
 import KasetsartMap from "./components/KasetsartMap";
-import api from "./api";
-import { RegisterBusStopPlugin } from "./plugins/BusStopMarkers";
-import { PluginProvider } from "./core/PluginManager";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import SearchBar from "./components/SearchBar";
+import Search from "./components/Search";
+import useFetchData from "./hooks/FetchData";
+import useNearestStation from "./hooks/NearestStation"
+import useAvailableLine from "./hooks/AvailableLine";
+import useLineSuggestion from "./hooks/LineSuggestion";
 
 function Home() {
-  const [line1, setLine1] = useState([]);
-  const [line3, setLine3] = useState([]);
-  const [line5, setLine5] = useState([]);
-  const [lineSpecail, setLineSpecail] = useState([]);
+  const [searchParams] = useSearchParams();
+  const { stationData, line1, line3, line5, lineSpecail, loading} = useFetchData();  // Use custom hook
+  const { availableLine } = useAvailableLine();
+  const [destinationStation, setDestinationStation] = useState({})
+  const [currentStation, setCurrentStation] = useState({})
+  const navigate = useNavigate();
+  const { nearestStation} = useNearestStation();
+  const { line } = useLineSuggestion();
+  const nearStation = nearestStation;
 
-  const fetchData = async () => {
-    try{
-      const response1 = await api.get("/api/line-one/")
-      const response3 = await api.get("/api/line-three/")
-      const response5 = await api.get("/api/line-five/")
-      const responseSpecial = await api.get("/api/line-special/")
-      setLine1(response1.data || []);
-      setLine3(response3.data || []);
-      setLine5(response5.data || []);
-      setLineSpecail(responseSpecial.data || [])
-    } catch (error) {
-      alert(error + "Failed to fetch data");
-    }
-  };
+  function retrieveCurrentStation(){
+    const curParams = searchParams.get('cur');
+    const currentId = curParams ? atob(curParams) : null;
+    const station = currentId ? stationData.find((station) => station.id == currentId) : null
+    setCurrentStation(station)
+  }
+
+  function retrieveDestinationStation(){
+    const desParams = searchParams.get('des');
+    const destinationId = desParams ? atob(desParams) : null;
+    const station = destinationId ? stationData.find((station) => station.id == destinationId) : null
+    setDestinationStation(station)
+  }
+
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    // auto find nearest station
+    if(!currentStation && nearStation.id){
+      {setCurrentStation(nearStation)}
+      const encodedId = btoa(nearStation.id)
+      navigate(`/?cur=${encodedId}`)
+    } 
+    else {
+      retrieveCurrentStation()
+    }
+    retrieveDestinationStation();
+    
+  }, [searchParams, stationData]);
 
+  // bus dummy data
+  const bus = [{bus:1, cur:3},{bus:2,cur:4},{bus:3,cur:8}]
+  
   return (
-      <div className='flex flex-col w-screen'>
+      <div className='flex flex-col min-w-screen h-full overflow-hidden'>
         <Header />
+        {destinationStation ? (
+          <div className='my-2 mx-5'>
+            <Search 
+              cur={currentStation ? currentStation : null}
+              des={destinationStation ? destinationStation : null}/>
+          </div>
+        ) :(
+          <div className='my-2 mx-5'>
+            <SearchBar 
+              searchLable="ค้นหาที่นี่"
+              state="des"/>
+          </div>
+          
+        )
+      }
         <div>
             <KasetsartMap />
         </div>
-        <div className='px-5 py-2'>
+        {loading ? (
+          <div>
+           
+          </div>
+        ) : (
+          <div className='px-5 py-2'>
+          {/* Render available lines first */}
+          {availableLine.includes("1") && (
             <LineCardInfo 
               line="1"
-              data={line1}/>
+              data={line1}
+              state={line == "1" ? "choose": null}
+              bus={bus}
+            />
+          )}
+          {availableLine.includes("3") && (
             <LineCardInfo 
               line="3"
               data={line3}
+              state={line == "3" ? "choose": null}
+              bus={bus}
             />
+          )}
+          {availableLine.includes("5") && (
             <LineCardInfo 
               line="5"
               data={line5}
+              state={line == "5" ? "choose": null}
+              bus={bus}
             />
+          )}
+          {availableLine.includes("s") && (
             <LineCardInfo 
               line="พิเศษ"
               data={lineSpecail}
+              state={line == "s" ? "choose": null}
+              bus={bus}
             />
-      </div>
+          )}
+        
+          {/* Render disabled lines */}
+          {(!availableLine.includes("1")) && (
+            <LineCardInfo 
+              line="1"
+              data={line1}
+              state="disable"
+              bus={bus}
+            />
+          )}
+          {(!availableLine.includes("3")) && (
+            <LineCardInfo 
+              line="3"
+              data={line3}
+              state="disable"
+              bus={bus}
+            />
+          )}
+          {(!availableLine.includes("5")) && (
+            <LineCardInfo 
+              line="5"
+              data={line5}
+              state="disable"
+              bus={bus}
+            />
+          )}
+          {(!availableLine.includes("s")) && (
+            <LineCardInfo 
+              line="พิเศษ"
+              data={lineSpecail}
+              state="disable"
+              bus={bus}
+            />
+          )}
+        </div>
+        
+          
+        ) }
+        
     </div>
   );
 }
