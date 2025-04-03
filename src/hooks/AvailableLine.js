@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../api";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function useAvailableLine() {
   const [searchParams] = useSearchParams();

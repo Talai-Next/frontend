@@ -1,7 +1,6 @@
 import { LiaHomeSolid } from "react-icons/lia";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
-import TextField from "@mui/material/TextField";
 
 const ICON_SIZE = 28;
 

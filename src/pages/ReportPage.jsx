@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import SeatRating from "@/components/SeatRating";
 import { z } from "zod";
-import api from "@/api";
+import api from "../api";
 import { BusStationSearch } from "@/components/BusStationSearch";
 import { motion, AnimatePresence } from "framer-motion";
 import useNearestStation from "@/hooks/NearestStation";
@@ -26,8 +26,8 @@ const ReportPage = () => {
   const [busStop, setBusStop] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
-  const { nearestStation, fetchNearestStation } = useNearestStation();
-  const { t, i18n } = useTranslation();
+  const { nearestStation } = useNearestStation();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +63,7 @@ const ReportPage = () => {
       setComments("");
       setError("");
     } catch (error) {
-      setError("An error occurred while submitting the form.");
+      setError(`An error occurred while submitting the form. : ${error}`);
     }
   };
 

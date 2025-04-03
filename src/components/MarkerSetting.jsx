@@ -12,7 +12,7 @@ const MarkerSetting = ({
   setShowCrosswalk,
   setShowSpeedBump,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const markerSettings = [
     {
       id: "busstop-switch",

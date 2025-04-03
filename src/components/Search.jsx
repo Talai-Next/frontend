@@ -1,7 +1,5 @@
 import SearchBar from "./SearchBar"
-import { useState, useEffect } from "react";
-import { useGeolocated } from "react-geolocated";
-import api from "../api";
+
 import NearestStationButton from "./NearestStationButton";
 import SwapButton from "./SwapButton";
 import { useTranslation } from "react-i18next";

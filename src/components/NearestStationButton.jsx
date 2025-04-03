@@ -5,14 +5,13 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 function NearestStationButton(){
-    const { nearestStation, fetchNearesStation } = useNearestStation();
+    const { nearestStation } = useNearestStation();
     const nearStation = nearestStation;
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     // retrive old route
-    const curId = searchParams.get('cur') || '';
     const desId = searchParams.get('des') || '';
 
     function handleClick(){

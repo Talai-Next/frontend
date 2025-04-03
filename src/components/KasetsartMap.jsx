@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { LatLngBounds } from "leaflet";
 import { usePlugins } from "../core/PluginManager";
@@ -15,7 +15,7 @@ const KasetsartMap = () => {
 
   const { plugins } = usePlugins();
   const [locations, setLocations] = useState({});
-
+  console.log(locations)
   useEffect(() => {
     getBusStopLocation();
   }, []);
@@ -25,7 +25,7 @@ const KasetsartMap = () => {
       const response = await api.get("/api/bus-stop-location/");
       setLocations(response.data);
     } catch (error) {
-      alert("Failed to fetch bus stop locations");
+      alert(`Failed to fetch bus stop locations : ${error}`);
     }
   };
 

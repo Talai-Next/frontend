@@ -5,7 +5,6 @@ import Header from "./components/Header";
 import { useState, useEffect } from "react";
 import "./index.css";
 import KasetsartMap from "./components/KasetsartMap";
-import api from "./api";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import SearchBar from "./components/SearchBar";
 import Search from "./components/Search";
@@ -21,7 +20,7 @@ function Home() {
   const [destinationStation, setDestinationStation] = useState({})
   const [currentStation, setCurrentStation] = useState({})
   const navigate = useNavigate();
-  const { nearestStation, fetchNearestStation } = useNearestStation();
+  const { nearestStation} = useNearestStation();
   const { line } = useLineSuggestion();
   const nearStation = nearestStation;
 

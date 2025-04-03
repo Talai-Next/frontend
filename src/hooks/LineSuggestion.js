@@ -1,7 +1,6 @@
 import api from "../api";
-import { useState, useEffect, useCallback } from "react";
-import { useGeolocated } from "react-geolocated";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom"; 
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom"; 
 
 export default function useLineSuggestion() {
     const [searchParams] = useSearchParams();
@@ -22,9 +21,7 @@ export default function useLineSuggestion() {
             }
           } catch (error) {
             alert(error + "Failed to fetch bus route data");
-          } finally {
-            setLoading(false);
-          }
+          } 
         };
     
         fetchData();
