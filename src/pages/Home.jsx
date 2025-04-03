@@ -42,8 +42,6 @@ function Home() {
   const [selectLine, setSelectLine] = useState(null);
   const [selectedStation, setSelectedStation] = useState(null);
 
-  console.log(line5)
-
   function retrieveCurrentStation() {
     const curParams = searchParams.get("cur");
     const currentId = curParams ? atob(curParams) : null;
