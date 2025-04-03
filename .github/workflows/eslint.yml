@@ -37,4 +37,5 @@ jobs:
           npm install @rollup/rollup-linux-x64-gnu || echo "Rollup binary not found"
 
       - name: Run eslint
-        run: npx eslint . --rule 'react/prop-types: off'
+        run: |
+          npx eslint . --rule "react/prop-types: off"
