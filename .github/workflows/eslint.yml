@@ -1,0 +1,41 @@
+name: Eslint CI
+
+on: pull_request
+
+jobs:
+  build:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Caching
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ github.run_id }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
+      - name: Clean up node_modules and package-lock.json
+        run: |
+          rm -rf node_modules
+          rm -f package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install missing Rollup binary (Linux)
+        run: |
+          npm install @rollup/rollup-linux-x64-gnu || echo "Rollup binary not found"
+
+      - name: Run eslint
+        run: |
+          npx eslint . --rule "react/prop-types: off"
