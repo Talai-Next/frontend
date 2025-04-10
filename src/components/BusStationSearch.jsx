@@ -54,14 +54,19 @@ export function BusStationSearch({ busStop, setBusStop, nearestStation }) {
           {busStop
             ? allStations.find((station) => station.station_code === busStop)
               ? `${busStop}: ${
-                  allStations.find(
-                    (station) => station.station_code === busStop
-                  )?.name
+                  i18n.language === 'th'
+                    ? allStations.find((station) => station.station_code === busStop)?.name
+                    : allStations.find((station) => station.station_code === busStop)?.name_eng
                 }`
               : "Select a bus stop"
             : nearestStation
-            ? `${nearestStation.station_code}: ${i18n.language == 'th' ? nearestStation.name : nearestStation.name_eng}`
-            : "Select a bus stop"}
+            ? `${nearestStation.station_code}: ${
+                i18n.language === 'th'
+                  ? nearestStation.name
+                  : nearestStation.name_eng
+              }`
+            : "Select a bus stop"
+          }
           <ChevronsUpDown className="opacity-50 h-4 w-4 ml-2" />
         </Button>
       </PopoverTrigger>

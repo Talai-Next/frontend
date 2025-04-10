@@ -70,7 +70,8 @@ function SearchBar({ searchLable, value, state }) {
 
     debounceTimeout.current = setTimeout(() => {
       const filteredList = allStations.filter(station =>
-        station.name.toLowerCase().includes(input.toLowerCase())
+        station.name.toLowerCase().includes(input.toLowerCase()) ||
+        station.name_eng.toLowerCase().includes(input.toLowerCase())
       );
 
       setList(filteredList);
@@ -101,7 +102,7 @@ function SearchBar({ searchLable, value, state }) {
       if (focusedIndex >= 0 && focusedIndex < list.length) {
         handleSearch(list[focusedIndex].id);
       } else {
-        const station = list.find(item => item.name === input);
+        const station = list.find(item => item.name === input || item.name_eng.toLowerCase() === input.toLowerCase());
         if (station) {
           handleSearch(station.id);
         } else {
