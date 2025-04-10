@@ -4,6 +4,7 @@ import L from "leaflet";
 import "leaflet-routing-machine";
 import api from "../api";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const MarkerPlugin = ({
   apiUrl,
@@ -18,6 +19,7 @@ const MarkerPlugin = ({
   const busLineRef = useRef(new Map());
   const routingControlRef = useRef(null);
   const map = useMap();
+  const { i18n } = useTranslation();
 
   const location = useLocation();
 
@@ -136,12 +138,11 @@ const MarkerPlugin = ({
             key={index}
             position={[location.latitude, location.longitude]}
             icon={isSearch ? busSearchMarkerIcon : isSelected ? selectMarkerIcon : unSelectMarkerIcon}
-            // icon={isSelected ? selectMarkerIcon : unSelectMarkerIcon}
           >
             <Popup>
               <h5>[{location.station_code}]</h5>
               <div>
-                <b>{location.name}</b>
+                <b>{i18n.language === 'th' ? location.name : location.name_eng}</b>
               </div>
             </Popup>
           </Marker>
